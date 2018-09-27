@@ -9,6 +9,8 @@
 #include <QMenu>
 #include "settings.h"
 #include "about.h"
+#include "mysettings.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +30,7 @@ protected:
 public slots:
     void procStart();
     void procStop();
+    void checkTime();
 
     void processOutput();
     void processError();
@@ -41,6 +44,8 @@ public slots:
     QStringList prepareParameters(bool isComboParametreEnabled);
 
     void catchError(QProcess::ProcessError err);
+
+private slots:
 
 private:
     Ui::MainWindow *ui;

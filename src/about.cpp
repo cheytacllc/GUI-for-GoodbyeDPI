@@ -9,7 +9,7 @@ About::About(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
     setWindowTitle("Hakkında");
-    setWindowIcon(QIcon(":/images/images/info-button.png"));
+    //setWindowIcon(QIcon(":/images/images/info-button.png"));
 
     QPixmap pix(":/images/images/icon.png");
     ui->iconLabel->setPixmap(pix);

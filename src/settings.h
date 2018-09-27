@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSettings>
 #include <QCloseEvent>
+#include <QEventLoop>
 
 namespace Ui {
 class Settings;
@@ -61,6 +62,13 @@ public slots:
 signals:
     void defaultParamStateChanged(Qt::CheckState state);
     void updateParameters();
+
+private slots:
+    void on_scheduleBox_toggled(bool checked);
+
+
+
+    void on_comboBox_currentIndexChanged(int index);
 
 private:
     Ui::Settings *ui;

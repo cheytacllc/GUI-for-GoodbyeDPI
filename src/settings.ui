@@ -475,81 +475,172 @@
       <attribute name="title">
        <string>Çalışma Ayarları</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="scheduleBox">
-         <property name="text">
-          <string>Çalışma Saatleri Ayarla (Sonraki guncellemede gelecek.)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="trayBox">
-         <property name="text">
-          <string>Sistem Tepsisine Küçült</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="startupBox">
-         <property name="text">
-          <string>Başlangıçta Otomatik Çalıştır</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QGroupBox" name="scheduleSettings">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="title">
-          <string>Çalışma Saatleri</string>
-         </property>
-         <widget class="QDateTimeEdit" name="startTime">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>90</y>
-            <width>51</width>
-            <height>22</height>
-           </rect>
-          </property>
-          <property name="displayFormat">
-           <string>HH:mm</string>
+      <widget class="QCheckBox" name="scheduleBox">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>62</y>
+         <width>291</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Çalışma Saatleri Ayarla (Sonraki guncellemede gelecek.)</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="trayBox">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>9</y>
+         <width>135</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Sistem Tepsisine Küçült</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="startupBox">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>35</y>
+         <width>160</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Başlangıçta Otomatik Çalıştır</string>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="scheduleSettings">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>87</y>
+         <width>632</width>
+         <height>385</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Çalışma Saatleri</string>
+       </property>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>130</width>
+          <height>46</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Başlangıç</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDateTimeEdit" name="startTime">
+             <property name="displayFormat">
+              <string>HH:mm</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Bitiş</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDateTimeEdit" name="endTime">
+             <property name="displayFormat">
+              <string>HH:mm</string>
+             </property>
+             <property name="calendarPopup">
+              <bool>false</bool>
+             </property>
+             <property name="timeSpec">
+              <enum>Qt::LocalTime</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>328</x>
+         <y>9</y>
+         <width>129</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QCheckBox" name="notificationBox">
+          <property name="text">
+           <string>Bildirimleri Kapat</string>
           </property>
          </widget>
-         <widget class="QDateTimeEdit" name="endTime">
-          <property name="geometry">
-           <rect>
-            <x>170</x>
-            <y>100</y>
-            <width>51</width>
-            <height>22</height>
-           </rect>
-          </property>
-          <property name="displayFormat">
-           <string>HH:mm</string>
-          </property>
-          <property name="calendarPopup">
-           <bool>false</bool>
-          </property>
-          <property name="timeSpec">
-           <enum>Qt::LocalTime</enum>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QCheckBox" name="notificationBox">
-         <property name="text">
-          <string>Bildirimleri Kapat</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Skin</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox">
+            <item>
+             <property name="text">
+              <string>Vista</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Windows Classic</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Fusion Light</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Fusion Dark</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </item>

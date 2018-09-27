@@ -144,6 +144,14 @@
         <translation>Disable Notifications</translation>
     </message>
     <message>
+        <source>Başlangıç</source>
+        <translation>Start</translation>
+    </message>
+    <message>
+        <source>Bitiş</source>
+        <translation>End</translation>
+    </message>
+    <message>
         <source>Form</source>
         <translation></translation>
     </message>

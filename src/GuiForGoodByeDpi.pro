@@ -44,7 +44,8 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     settings.h \
-    about.h
+    about.h \
+    mysettings.h
 
 FORMS += \
         mainwindow.ui \

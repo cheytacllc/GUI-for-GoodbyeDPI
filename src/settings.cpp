@@ -1,6 +1,6 @@
 #include "settings.h"
 #include "ui_settings.h"
-
+#include "mysettings.h"
 #include <QDebug>
 
 Settings::Settings(QWidget *parent) :
@@ -18,6 +18,7 @@ Settings::Settings(QWidget *parent) :
     ui(new Ui::Settings)
 {
     ui->setupUi(this);
+    ui->comboBox->setCurrentIndex(mySettings::loadTheme());
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
     setWindowIcon(QIcon(":/images/images/settings-gears-button.png"));
     setWindowTitle("Ayarlar");
@@ -149,6 +150,13 @@ void Settings::closeEvent(QCloseEvent *event)
     }
 
     emit defaultParamStateChanged(ui->checkDefaultParam->checkState());
+    ayarR->setValue("System/systemSchedule", ui->scheduleBox->isChecked());
+    if(ui->scheduleBox->isChecked())
+    {
+    ayarR->setValue("System/systemScheduleStart", ui->startTime->time().toString());
+    ayarR->setValue("System/systemScheduleEnd", ui->endTime->time().toString());
+    }
+
 }
 
 void Settings::onCheckedDefaultParam()
@@ -824,4 +832,31 @@ void Settings::loadSettings()
     {
         ui->notificationBox->setChecked(false);
     }
+    if(ayarR->value("System/systemSchedule").toBool())
+    {
+        ui->scheduleBox->setChecked(true);
+    }
+    else
+    {
+        ui->scheduleBox->setChecked(false);
+    }
+
+    ui->startTime->setTime(ayarR->value("System/systemScheduleStart").toTime());
+    ui->endTime->setTime(ayarR->value("System/systemScheduleEnd").toTime());
+}
+
+void Settings::on_scheduleBox_toggled(bool checked)
+{
+    if(checked)
+        ui->scheduleSettings->setEnabled(true);
+    else
+        ui->scheduleSettings->setDisabled(true);
+}
+
+
+
+void Settings::on_comboBox_currentIndexChanged(int index)
+{
+    mySettings::setTheme(index);
+
 }

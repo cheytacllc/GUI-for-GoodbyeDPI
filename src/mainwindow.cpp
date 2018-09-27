@@ -8,7 +8,9 @@
 #include <QDirIterator>
 #include <QListIterator>
 #include <memory>
-#include <Windows.h>
+#include <QTime>
+#include <QTimer>
+#include <windows.h>
 
 MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     QMainWindow(parent),
@@ -26,7 +28,9 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     proc(new QProcess(this)),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+    mySettings::setTheme(mySettings::loadTheme());
     setWindowTitle("GoodByeDPI GUI");
     setWindowIcon(QIcon(":/images/images/icon.ico"));
 
@@ -115,6 +119,17 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     }
 
     connect(proc, &QProcess::errorOccurred, this, &MainWindow::catchError);
+
+    if(settings->value("System/systemSchedule").toBool())
+    {
+       QTimer *timer = new QTimer(this);
+            connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
+            timer->start(1000);
+    }
+
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -166,6 +181,15 @@ void MainWindow::procStop()
 {
     proc->close();
     proc->waitForFinished(2000);
+}
+
+void MainWindow::checkTime()
+{
+    if(settings->value("System/systemScheduleStart").toString()==QTime::currentTime().toString())
+        ui->btnStart->click();
+    if(settings->value("System/systemScheduleEnd").toString()==QTime::currentTime().toString())
+        ui->btnStop->click();
+
 }
 
 void MainWindow::processOutput()
