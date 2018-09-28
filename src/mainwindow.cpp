@@ -12,6 +12,17 @@
 #include <QTimer>
 #include <windows.h>
 
+void MainWindow::timer()
+{
+    if(settings->value("System/systemSchedule").toBool())
+    {
+        QTimer *timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
+        timer->start(1000);
+
+    }
+}
+
 MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     QMainWindow(parent),
     ayarlar(new Settings()),
@@ -117,15 +128,10 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
         hideAction->setEnabled(false);
         showAction->setEnabled(true);
     }
-
+    connect(ayarlar, SIGNAL(isClosed()), this, SLOT(timer()));
     connect(proc, &QProcess::errorOccurred, this, &MainWindow::catchError);
-
-    if(settings->value("System/systemSchedule").toBool())
-    {
-       QTimer *timer = new QTimer(this);
-            connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
-            timer->start(1000);
-    }
+    //ui->btnStart->setText(QTime::currentTime().toString());
+    timer();
 
 
 
@@ -185,10 +191,19 @@ void MainWindow::procStop()
 
 void MainWindow::checkTime()
 {
-    if(settings->value("System/systemScheduleStart").toString()==QTime::currentTime().toString())
-        ui->btnStart->click();
-    if(settings->value("System/systemScheduleEnd").toString()==QTime::currentTime().toString())
-        ui->btnStop->click();
+    for(int i=1;i<8;i++)
+    {
+        if(QDate::currentDate().dayOfWeek()==i)
+        {
+            if(settings->value("System/D"+QString::number(i)+"/Enabled").toBool())
+            {
+                if(settings->value("System/D"+QString::number(i)+"/systemScheduleStart").toString()==QTime::currentTime().toString())
+                    ui->btnStart->click();
+                if(settings->value("System/D"+QString::number(i)+"/systemScheduleEnd").toString()==QTime::currentTime().toString())
+                    ui->btnStop->click();
+            }
+        }
+    }
 
 }
 
@@ -235,6 +250,7 @@ void MainWindow::handleState()
 void MainWindow::onActionAyarlar()
 {
     ayarlar->show();
+
 }
 
 void MainWindow::onActionAbout()
@@ -251,8 +267,8 @@ void MainWindow::onDefaultParamCheckState(Qt::CheckState state)
     }
     else
     {
-       ui->comboParametre->setEnabled(false);
-       prepareParameters(false);
+        ui->comboParametre->setEnabled(false);
+        prepareParameters(false);
     }
 
 }

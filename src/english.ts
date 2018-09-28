@@ -124,8 +124,8 @@
         <translation>Software Settings</translation>
     </message>
     <message>
-        <source>Çalışma Saatleri Ayarla (Sonraki guncellemede gelecek.)</source>
-        <translation>Schedule Autostart (Will be implemented in next update)</translation>
+        <source>Çalışma Saatleri Ayarla</source>
+        <translation>Schedule Autostart</translation>
     </message>
     <message>
         <source>Sistem Tepsisine Küçült</source>
@@ -138,6 +138,34 @@
     <message>
         <source>Çalışma Saatleri</source>
         <translation>Schedule Times</translation>
+    </message>
+    <message>
+        <source>Pazartesi</source>
+        <translation>Monday</translation>
+    </message>
+    <message>
+        <source>Salı</source>
+        <translation>Tuesday</translation>
+    </message>
+    <message>
+        <source>Çarşamba</source>
+        <translation>Wednesday</translation>
+    </message>
+    <message>
+        <source>Perşembe</source>
+        <translation>Thursday</translation>
+    </message>
+    <message>
+        <source>Cuma</source>
+        <translation>Friday</translation>
+    </message>
+    <message>
+        <source>Cumartesi</source>
+        <translation>Saturday</translation>
+    </message>
+    <message>
+        <source>Pazar</source>
+        <translation>Sunday</translation>
     </message>
     <message>
         <source>Bildirimleri Kapat</source>

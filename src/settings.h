@@ -62,6 +62,7 @@ public slots:
 signals:
     void defaultParamStateChanged(Qt::CheckState state);
     void updateParameters();
+    void isClosed();
 
 private slots:
     void on_scheduleBox_toggled(bool checked);
@@ -69,6 +70,20 @@ private slots:
 
 
     void on_comboBox_currentIndexChanged(int index);
+
+    void on_checkBox_1_toggled(bool checked);
+
+    void on_checkBox_2_toggled(bool checked);
+
+    void on_checkBox_3_toggled(bool checked);
+
+    void on_checkBox_4_toggled(bool checked);
+
+    void on_checkBox_5_toggled(bool checked);
+
+    void on_checkBox_6_toggled(bool checked);
+
+    void on_checkBox_7_toggled(bool checked);
 
 private:
     Ui::Settings *ui;

@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+
     explicit MainWindow(QStringList, QWidget *parent = 0);
     ~MainWindow();
 
@@ -31,7 +32,7 @@ public slots:
     void procStart();
     void procStop();
     void checkTime();
-
+    void timer();
     void processOutput();
     void processError();
     void handleState();

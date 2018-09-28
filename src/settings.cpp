@@ -3,6 +3,7 @@
 #include "mysettings.h"
 #include <QDebug>
 
+
 Settings::Settings(QWidget *parent) :
     QWidget(parent),
     ayarR(new QSettings("HexOpenSource", "GBDPI-GUI")),
@@ -153,10 +154,29 @@ void Settings::closeEvent(QCloseEvent *event)
     ayarR->setValue("System/systemSchedule", ui->scheduleBox->isChecked());
     if(ui->scheduleBox->isChecked())
     {
-    ayarR->setValue("System/systemScheduleStart", ui->startTime->time().toString());
-    ayarR->setValue("System/systemScheduleEnd", ui->endTime->time().toString());
-    }
+        ayarR->setValue("System/D1/systemScheduleStart", ui->startTime->time().toString());
+        ayarR->setValue("System/D1/systemScheduleEnd", ui->endTime->time().toString());
 
+        ayarR->setValue("System/D2/systemScheduleStart", ui->startTime_2->time().toString());
+        ayarR->setValue("System/D2/systemScheduleEnd", ui->endTime_2->time().toString());
+
+        ayarR->setValue("System/D3/systemScheduleStart", ui->startTime_3->time().toString());
+        ayarR->setValue("System/D3/systemScheduleEnd", ui->endTime_3->time().toString());
+
+        ayarR->setValue("System/D4/systemScheduleStart", ui->startTime_4->time().toString());
+        ayarR->setValue("System/D4/systemScheduleEnd", ui->endTime_4->time().toString());
+
+        ayarR->setValue("System/D5/systemScheduleStart", ui->startTime_5->time().toString());
+        ayarR->setValue("System/D5/systemScheduleEnd", ui->endTime_5->time().toString());
+
+        ayarR->setValue("System/D6/systemScheduleStart", ui->startTime_6->time().toString());
+        ayarR->setValue("System/D6/systemScheduleEnd", ui->endTime_6->time().toString());
+
+        ayarR->setValue("System/D7/systemScheduleStart", ui->startTime_7->time().toString());
+        ayarR->setValue("System/D7/systemScheduleEnd", ui->endTime_7->time().toString());
+    }
+    emit isClosed();
+    event->accept();
 }
 
 void Settings::onCheckedDefaultParam()
@@ -841,16 +861,44 @@ void Settings::loadSettings()
         ui->scheduleBox->setChecked(false);
     }
 
-    ui->startTime->setTime(ayarR->value("System/systemScheduleStart").toTime());
-    ui->endTime->setTime(ayarR->value("System/systemScheduleEnd").toTime());
+
+
+
+    ui->checkBox_1->setChecked(ayarR->value("System/D1/Enabled").toBool());
+    ui->checkBox_2->setChecked(ayarR->value("System/D2/Enabled").toBool());
+    ui->checkBox_3->setChecked(ayarR->value("System/D3/Enabled").toBool());
+    ui->checkBox_4->setChecked(ayarR->value("System/D4/Enabled").toBool());
+    ui->checkBox_5->setChecked(ayarR->value("System/D5/Enabled").toBool());
+    ui->checkBox_6->setChecked(ayarR->value("System/D6/Enabled").toBool());
+    ui->checkBox_7->setChecked(ayarR->value("System/D7/Enabled").toBool());
+
+    ui->startTime->setTime(ayarR->value("System/D1/systemScheduleStart").toTime());
+    ui->endTime->setTime(ayarR->value("System/D1/systemScheduleEnd").toTime());
+
+    ui->startTime_2->setTime(ayarR->value("System/D2/systemScheduleStart").toTime());
+    ui->endTime_2->setTime(ayarR->value("System/D2/systemScheduleEnd").toTime());
+
+    ui->startTime_3->setTime(ayarR->value("System/D3/systemScheduleStart").toTime());
+    ui->endTime_3->setTime(ayarR->value("System/D3/systemScheduleEnd").toTime());
+
+    ui->startTime_4->setTime(ayarR->value("System/D4/systemScheduleStart").toTime());
+    ui->endTime_4->setTime(ayarR->value("System/D4/systemScheduleEnd").toTime());
+
+    ui->startTime_5->setTime(ayarR->value("System/D5/systemScheduleStart").toTime());
+    ui->endTime_5->setTime(ayarR->value("System/D5/systemScheduleEnd").toTime());
+
+    ui->startTime_6->setTime(ayarR->value("System/D6/systemScheduleStart").toTime());
+    ui->endTime_6->setTime(ayarR->value("System/D6/systemScheduleEnd").toTime());
+
+    ui->startTime_7->setTime(ayarR->value("System/D7/systemScheduleStart").toTime());
+    ui->endTime_7->setTime(ayarR->value("System/D7/systemScheduleEnd").toTime());
+
+
 }
 
 void Settings::on_scheduleBox_toggled(bool checked)
 {
-    if(checked)
-        ui->scheduleSettings->setEnabled(true);
-    else
-        ui->scheduleSettings->setDisabled(true);
+    ui->scheduleSettings->setEnabled(checked);
 }
 
 
@@ -858,5 +906,54 @@ void Settings::on_scheduleBox_toggled(bool checked)
 void Settings::on_comboBox_currentIndexChanged(int index)
 {
     mySettings::setTheme(index);
+
+}
+
+void Settings::on_checkBox_1_toggled(bool checked)
+{
+    ui->widget_1->setEnabled(checked);
+    ayarR->setValue("System/D1/Enabled",checked);
+
+}
+
+void Settings::on_checkBox_2_toggled(bool checked)
+{
+    ui->widget_2->setEnabled(checked);
+    ayarR->setValue("System/D2/Enabled",checked);
+
+}
+
+void Settings::on_checkBox_3_toggled(bool checked)
+{
+    ui->widget_3->setEnabled(checked);
+    ayarR->setValue("System/D3/Enabled",checked);
+
+}
+
+void Settings::on_checkBox_4_toggled(bool checked)
+{
+    ui->widget_4->setEnabled(checked);
+    ayarR->setValue("System/D4/Enabled",checked);
+
+}
+
+void Settings::on_checkBox_5_toggled(bool checked)
+{
+    ui->widget_5->setEnabled(checked);
+    ayarR->setValue("System/D5/Enabled",checked);
+
+}
+
+void Settings::on_checkBox_6_toggled(bool checked)
+{
+    ui->widget_6->setEnabled(checked);
+    ayarR->setValue("System/D6/Enabled",checked);
+
+}
+
+void Settings::on_checkBox_7_toggled(bool checked)
+{
+    ui->widget_7->setEnabled(checked);
+    ayarR->setValue("System/D7/Enabled",checked);
 
 }
