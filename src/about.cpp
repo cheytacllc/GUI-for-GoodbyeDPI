@@ -1,6 +1,8 @@
 #include "about.h"
 #include "ui_about.h"
 #include <QLabel>
+#include <QDesktopServices>
+#include <QUrl>
 
 About::About(QWidget *parent) :
     QDialog(parent),
@@ -9,7 +11,6 @@ About::About(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
     setWindowTitle("Hakkında");
-    //setWindowIcon(QIcon(":/images/images/info-button.png"));
 
     QPixmap pix(":/images/images/icon.png");
     ui->iconLabel->setPixmap(pix);
@@ -18,11 +19,20 @@ About::About(QWidget *parent) :
 
     ui->aboutLabel->setTextFormat(Qt::RichText);
     ui->aboutLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    ui->aboutLabel->setOpenExternalLinks(true);
+    //ui->aboutLabel->setOpenExternalLinks(true);
 
 }
 
 About::~About()
 {
     delete ui;
+}
+
+
+void About::on_aboutLabel_linkActivated(const QString &link)
+{
+    QDesktopServices::openUrl(QUrl(link, QUrl::TolerantMode));
+    if(link=="qt")
+        QApplication::aboutQt();
+
 }

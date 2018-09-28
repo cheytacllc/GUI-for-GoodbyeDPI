@@ -25,23 +25,11 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/images/images/info-button.png</normaloff>:/images/images/info-button.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
-    <widget class="QLabel" name="aboutLabel">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>300</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;GoodByeDPI GUI&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Geliştirici (Developer): &lt;span style=&quot; font-weight:600;&quot;&gt;hex4d0r&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Kaynak Kod&lt;/span&gt; (Source Code)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/hex4d0r/GUI-for-GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Bağış(Support)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://www.patreon.com/hex4d0r&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Patreon&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Credits&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/ValdikSS/GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ValdikSS/GoodByeDPI&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="iconLabel">
      <property name="sizePolicy">
@@ -63,7 +51,23 @@
       </size>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>&amp;TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="aboutLabel">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>300</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;GoodByeDPI GUI&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Geliştirici (Developer): &lt;span style=&quot; font-weight:600;&quot;&gt;hex4d0r&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Kaynak Kod&lt;/span&gt; (Source Code)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/hex4d0r/GUI-for-GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Bağış(Support)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://www.patreon.com/hex4d0r&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Patreon&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Credits&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;qt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Qt 5.11&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/ValdikSS/GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ValdikSS/GoodByeDPI&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -72,6 +76,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>
