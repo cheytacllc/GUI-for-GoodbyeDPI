@@ -4,9 +4,9 @@
 
 > İndirme Bağlantıları
 >
->[32 Bit](https://github.com/hex4d0r/GUI-for-GoodbyeDPI/releases/download/v1.0/GoodByeDPI_GUI_32Bit.zip)
+>[32 Bit](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.3/GoodByeDPI_GUI_32Bit.zip)
 >
->[64 Bit](https://github.com/hex4d0r/GUI-for-GoodbyeDPI/releases/download/v1.0/GoodByeDPI_GUI_64Bit.zip)
+>[64 Bit](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.3/GoodByeDPI_GUI_64Bit.zip)
 
 # Kullanım
 
