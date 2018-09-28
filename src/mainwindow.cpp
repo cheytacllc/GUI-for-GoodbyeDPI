@@ -14,14 +14,11 @@
 
 void MainWindow::timer()
 {
-    if(settings->value("System/systemSchedule").toBool())
-    {
         QTimer *timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
-        timer->start(1000);
-
-    }
+        timer->start(10000);
 }
+
 
 MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     QMainWindow(parent),
@@ -128,7 +125,8 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
         hideAction->setEnabled(false);
         showAction->setEnabled(true);
     }
-    connect(ayarlar, SIGNAL(isClosed()), this, SLOT(timer()));
+
+    //connect(ayarlar, SIGNAL(isClosed()), this, SLOT(timer()));
     connect(proc, &QProcess::errorOccurred, this, &MainWindow::catchError);
     //ui->btnStart->setText(QTime::currentTime().toString());
     timer();
@@ -175,7 +173,7 @@ void MainWindow::procStart()
     proc->start(QDir::currentPath() + "/goodbyedpi/goodbyedpi.exe", QProcess::ReadOnly);
     proc->waitForStarted(1000);
 
-    if(!settings->value("System/disableNotifications").toBool() && !this->isVisible())
+    if(!settings->value("System/disableNotifications").toBool())
     {
         qDebug() << "Message will shown";
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
@@ -187,6 +185,12 @@ void MainWindow::procStop()
 {
     proc->close();
     proc->waitForFinished(2000);
+    if(!settings->value("System/disableNotifications").toBool())
+    {
+        qDebug() << "Message will shown";
+        QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
+        trayIcon->showMessage("GoodByeDPI GUI", tr("Durduruldu."), icon, 1000);
+    }
 }
 
 void MainWindow::checkTime()
@@ -197,9 +201,9 @@ void MainWindow::checkTime()
         {
             if(settings->value("System/D"+QString::number(i)+"/Enabled").toBool())
             {
-                if(settings->value("System/D"+QString::number(i)+"/systemScheduleStart").toString()==QTime::currentTime().toString())
+                if(settings->value("System/D"+QString::number(i)+"/systemScheduleStart").toString().remove(5,7)==QTime::currentTime().toString().remove(5,7))
                     ui->btnStart->click();
-                if(settings->value("System/D"+QString::number(i)+"/systemScheduleEnd").toString()==QTime::currentTime().toString())
+                if(settings->value("System/D"+QString::number(i)+"/systemScheduleEnd").toString().remove(5,7)==QTime::currentTime().toString().remove(5,7))
                     ui->btnStop->click();
             }
         }

@@ -47,6 +47,10 @@
         <translation>Started.</translation>
     </message>
     <message>
+        <source>Durduruldu.</source>
+        <translation>Stopped.</translation>
+    </message>
+    <message>
         <source>[-] Durduruldu</source>
         <translation>[-] Stopped</translation>
     </message>

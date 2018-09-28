@@ -46,7 +46,8 @@ public slots:
 
     void catchError(QProcess::ProcessError err);
 
-private slots:
+signals:
+
 
 private:
     Ui::MainWindow *ui;
