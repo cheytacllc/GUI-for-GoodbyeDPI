@@ -33,7 +33,7 @@ Qt Creator'ı başlattıktan sonra File - Open File tıklayıp **.pro** uzantıl
 ## İleriki Sürümlerde Eklenmesi Planlanan/Beklenen Özellikler
 |Özellik| İyileştirme |
 |--| --|
-| Çalışma Saatleri Ayarlama (şimdilik basit birşey ayarlandı) |Parametre Sisteminin Yeniden Kodlanması|
+| Çalışma Saatleri Ayarlama (Tamamlandı) |Parametre Sisteminin Yeniden Kodlanması|
 | Güncelleme Yöneticisi  |Daha İyi Hata Tespiti|
 | Sistem DNS'i Değiştirebilme|Arayüzde Yapılacak Değişiklikler |
 
