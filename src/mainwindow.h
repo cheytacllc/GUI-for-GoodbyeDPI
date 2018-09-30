@@ -38,7 +38,7 @@ public slots:
     void processOutput();
     void processError();
     void handleState();
-
+    void RestoreWindowTrigger(QSystemTrayIcon::ActivationReason RW);
     void onActionAyarlar();
     void onActionAbout();
 

@@ -14,9 +14,9 @@
 
 void MainWindow::timer()
 {
-        QTimer *timer = new QTimer(this);
-        connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
-        timer->start(10000);
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
+    timer->start(10000);
 }
 
 
@@ -44,7 +44,8 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 
     trayIcon->setIcon(QIcon(":/images/images/icon.ico"));
     trayIcon->setToolTip("GoodByeDPI GUI by hex4d0r");
-
+    trayIcon->setVisible(true);
+    trayIcon->show();
     ui->labelParameters->setWordWrap(true);
 
     //For using lambda functions with traymenu
@@ -67,6 +68,10 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
         traymn->actions().at(5)->setEnabled(true);
         traymn->actions().at(4)->setEnabled(false);
     });
+
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
+            SLOT(RestoreWindowTrigger(QSystemTrayIcon::ActivationReason)));
+
 
     QList<QAction*> actionList;
     actionList << startAction << stopAction << settingsAction << showAction << hideAction << closeAction;
@@ -138,6 +143,9 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    dnsCrypt(" -service stop");
+    dnsCrypt(" -service uninstall");
+    changeDns("");
     delete ui;
     proc->kill();
 }
@@ -149,6 +157,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     {
         event->ignore();
         this->hide();
+        trayIcon->show();
         trayMenu->actions().at(4)->setEnabled(true);
         trayMenu->actions().at(5)->setEnabled(false);
 
@@ -272,6 +281,26 @@ void MainWindow::handleState()
         ui->btnStop->setEnabled(true);
         trayMenu->actions().at(0)->setEnabled(false);
         trayMenu->actions().at(1)->setEnabled(true);
+    }
+}
+
+void MainWindow::RestoreWindowTrigger(QSystemTrayIcon::ActivationReason RW)
+{
+    if(RW == QSystemTrayIcon::DoubleClick)
+    {
+        if(this->isHidden())
+        {
+            this->show();
+            this->activateWindow();
+            trayMenu->actions().at(5)->setEnabled(true);
+            trayMenu->actions().at(4)->setEnabled(false);
+        }
+        else
+        {
+            this->hide();
+            trayMenu->actions().at(5)->setEnabled(false);
+            trayMenu->actions().at(4)->setEnabled(true);
+        }
     }
 }
 
