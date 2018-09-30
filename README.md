@@ -1,4 +1,4 @@
-# GoodByeDPI GUI
+# GoodByeDPI GUI ve dnscrypt
 
 [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI) isimli anti sansür uygulaması için kullanıcı arayüzü ile kolay kullanım sağlar.
 
@@ -35,7 +35,8 @@ Qt Creator'ı başlattıktan sonra File - Open File tıklayıp **.pro** uzantıl
 |--| --|
 | Çalışma Saatleri Ayarlama (Tamamlandı) |Parametre Sisteminin Yeniden Kodlanması|
 | Güncelleme Yöneticisi  |Daha İyi Hata Tespiti|
-| Sistem DNS'i Değiştirebilme|Arayüzde Yapılacak Değişiklikler |
+| Sistem DNS'i Değiştirebilme(Tamamlandı)|Arayüzde Yapılacak Değişiklikler |
+| DnsCrypt(Tamamlandı)|  |
 
 ## Bağış
 
