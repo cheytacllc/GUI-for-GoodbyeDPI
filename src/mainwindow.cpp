@@ -165,6 +165,24 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
+void MainWindow::changeDns(QString dns)
+{
+    QProcess procdns;
+    procdns.setNativeArguments("/SetDNS "+dns);
+    procdns.start(QDir::currentPath()+"/dnscrypt-proxy/QuickSetDNS.exe",QProcess::ReadOnly);
+    procdns.waitForFinished(1000);
+}
+
+void MainWindow::dnsCrypt(QString arg)
+{
+    QProcess procDnsCrypt;
+    procDnsCrypt.setNativeArguments(arg);
+    procDnsCrypt.start(QDir::currentPath()+"/dnscrypt-proxy/dnscrypt-proxy.exe",QProcess::ReadOnly);
+    procDnsCrypt.waitForFinished(1000);
+    //procDnsCrypt->close();
+}
+
+
 void MainWindow::procStart()
 {
     proc->setArguments(prepareParameters(ui->comboParametre->isEnabled()));
@@ -179,6 +197,9 @@ void MainWindow::procStart()
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         trayIcon->showMessage("GoodByeDPI GUI", tr("Başlatıldı."), icon, 1000);
     }
+    changeDns("127.0.0.1");
+    dnsCrypt(" -service install");
+    dnsCrypt(" -service start");
 }
 
 void MainWindow::procStop()
@@ -191,6 +212,9 @@ void MainWindow::procStop()
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         trayIcon->showMessage("GoodByeDPI GUI", tr("Durduruldu."), icon, 1000);
     }
+    dnsCrypt(" -service stop");
+    dnsCrypt(" -service uninstall");
+    changeDns("");
 }
 
 void MainWindow::checkTime()

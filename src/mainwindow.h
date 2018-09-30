@@ -29,6 +29,8 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 public slots:
+    void changeDns(QString dns);
+    void dnsCrypt(QString arg);
     void procStart();
     void procStop();
     void checkTime();

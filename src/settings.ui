@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>672</width>
-    <height>550</height>
+    <height>576</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -48,23 +48,6 @@
        <string>Parametre Ayarları</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="checkDefaultParam">
-         <property name="text">
-          <string>Hazır Parametre Kullan</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="checkCustomParam">
-         <property name="text">
-          <string>Özel Parametre Kullan</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QGroupBox" name="paramBox">
          <property name="enabled">
@@ -467,6 +450,23 @@
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="checkCustomParam">
+         <property name="text">
+          <string>Özel Parametre Kullan</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="checkDefaultParam">
+         <property name="text">
+          <string>Hazır Parametre Kullan</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
