@@ -235,18 +235,18 @@ void Settings::onCheckedSystemTray()
 
 void Settings::onCheckedStartup()
 {
-    QSettings startup("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+    QSettings startup("HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
     if(ui->startupBox->checkState() == Qt::Checked)
     {
         QString appPath = QCoreApplication::applicationFilePath();
         appPath.replace("/", "\\");
-        startup.setValue("GuiForGoodByeDPI", QString(appPath + " -silent").toStdString().c_str());
-        ayarR->setValue("System/systemTray", true);
+        startup.setValue(QApplication::applicationName(), QString(appPath + " -silent").toStdString().c_str());
+        ayarR->setValue("System/systemStartup", true);
     }
     else
     {
-        startup.remove("GuiForGoodByeDPI");
-        ayarR->setValue("System/systemTray", false);
+        startup.remove(QApplication::applicationName());
+        ayarR->setValue("System/systemStartup", false);
     }
 }
 
