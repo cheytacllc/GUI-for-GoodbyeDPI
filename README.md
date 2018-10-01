@@ -18,7 +18,7 @@ Parametrelerin tam olarak kayıt edilebilmesi için Ayarlar penceresini **kapat�
 
 Başlangıçta özel bir ayar yapmanıza gerek yoktur. **Başlat** butonuna tıklayıp sansürsüz internetin keyfini çıkarabilirsiniz. Özel Ayarlar isteğe bağlı şekilde düzenlenebilir. İlk açılışta en uygun ayar **Ön Tanımlı** olarak ayarlanmıştır.
 
-**~~Windows DNS adresini kendiniz değiştirmeniz gerekmektedir. Aksi halde kuvvetle muhtemel engellenmiş sitelere erişim sağlayamayacaksınız.~~Artık DNS adresini otomatik değiştiriyor**
+~~Windows DNS adresini kendiniz değiştirmeniz gerekmektedir. Aksi halde kuvvetle muhtemel engellenmiş sitelere erişim sağlayamayacaksınız.~~ **Artık DNS adresini otomatik değiştiriyor**
 
 ## Kaynak Koddan Derleme
 
