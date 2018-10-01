@@ -42,8 +42,8 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     setWindowTitle("GoodByeDPI GUI");
     setWindowIcon(QIcon(":/images/images/icon.ico"));
 
-    trayIcon->setIcon(QIcon(":/images/images/icon.ico"));
-    trayIcon->setToolTip("GoodByeDPI GUI by hex4d0r");
+    trayIcon->setIcon(QIcon(":/images/images/stopped_icon.ico"));
+    trayIcon->setToolTip("GoodByeDPI GUI");
     trayIcon->setVisible(true);
     trayIcon->show();
     ui->labelParameters->setWordWrap(true);
@@ -206,6 +206,7 @@ void MainWindow::procStart()
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         trayIcon->showMessage("GoodByeDPI GUI", tr("Başlatıldı."), icon, 1000);
     }
+    trayIcon->setIcon(QIcon(":/images/images/icon.ico"));
     changeDns("127.0.0.1");
     dnsCrypt(" -service install");
     dnsCrypt(" -service start");
@@ -221,6 +222,7 @@ void MainWindow::procStop()
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         trayIcon->showMessage("GoodByeDPI GUI", tr("Durduruldu."), icon, 1000);
     }
+    trayIcon->setIcon(QIcon(":/images/images/stopped_icon.ico"));
     dnsCrypt(" -service stop");
     dnsCrypt(" -service uninstall");
     changeDns("");

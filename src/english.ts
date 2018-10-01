@@ -47,6 +47,14 @@
         <translation>Started.</translation>
     </message>
     <message>
+        <source>GoodByeDPI GUI (Başlatıldı)</source>
+        <translation>GoodByeDPI GUI (Started)</translation>
+    </message>
+    <message>
+        <source>GoodByeDPI GUI (Durduruldu)</source>
+        <translation>GoodByeDPI GUI (Stopped)</translation>
+    </message>
+    <message>
         <source>Durduruldu.</source>
         <translation>Stopped.</translation>
     </message>
