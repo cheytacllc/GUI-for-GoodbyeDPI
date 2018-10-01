@@ -37,9 +37,3 @@ Qt Creator'ı başlattıktan sonra File - Open File tıklayıp **.pro** uzantıl
 | Güncelleme Yöneticisi  |Daha İyi Hata Tespiti|
 | Sistem DNS'i Değiştirebilme(Tamamlandı)|Arayüzde Yapılacak Değişiklikler |
 | DnsCrypt(Tamamlandı)|  |
-
-## Bağış
-
-Destek olmak için,
-
-[Patreon](https://www.patreon.com/hex4d0r)
