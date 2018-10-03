@@ -10,7 +10,8 @@
 #include "settings.h"
 #include "about.h"
 #include "mysettings.h"
-
+#include <QFile>
+#include <windows.h>
 
 namespace Ui {
 class MainWindow;
@@ -21,7 +22,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-
     explicit MainWindow(QStringList, QWidget *parent = 0);
     ~MainWindow();
 

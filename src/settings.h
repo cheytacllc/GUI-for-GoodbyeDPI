@@ -17,6 +17,7 @@ class Settings : public QWidget
 public:
     explicit Settings(QWidget *parent = 0);
     ~Settings();
+    void schtasks(QString arg);
 
     void ayarKayit();
 

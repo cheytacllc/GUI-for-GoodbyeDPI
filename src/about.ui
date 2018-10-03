@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>650</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -31,7 +31,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
-    <widget class="QLabel" name="iconLabel">
+    <widget class="QScrollArea" name="scrollArea">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -40,38 +40,97 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>256</width>
-       <height>256</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>256</width>
-       <height>256</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>&amp;TextLabel</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="aboutLabel">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>350</height>
+       <height>16777215</height>
       </size>
      </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;GoodByeDPI GUI&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Geliştirici (Developer): &lt;span style=&quot; font-weight:600;&quot;&gt;hex4d0r&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Contributor&lt;span style=&quot; font-weight:600;&quot;&gt;:  m231 (cheytacllc)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Kaynak Kod&lt;/span&gt; (Source Code)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/hex4d0r/GUI-for-GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/cheytacllc/GUI-for-GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Github&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Bağış(Support)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://www.patreon.com/hex4d0r&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Patreon&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Credits&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;qt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Qt 5.11&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/ValdikSS/GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ValdikSS/GoodByeDPI&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/jedisct1/dnscrypt-proxy&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;dnscrypt-proxy&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;http://www.nirsoft.net/utils/quick_set_dns.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;QuickSetDns&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <property name="baseSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="widgetResizable">
+      <bool>true</bool>
      </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>284</width>
+        <height>650</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>650</height>
+       </size>
+      </property>
+      <widget class="QLabel" name="iconLabel">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>256</width>
+         <height>256</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>256</width>
+         <height>256</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>256</width>
+         <height>256</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&amp;TextLabel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="aboutLabel">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>280</y>
+         <width>300</width>
+         <height>316</height>
+        </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>350</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;GoodByeDPI GUI&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Geliştirici (Developer): &lt;span style=&quot; font-weight:600;&quot;&gt;hex4d0r&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Contributor&lt;span style=&quot; font-weight:600;&quot;&gt;:  m231 (cheytacllc)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Kaynak Kod&lt;/span&gt; (Source Code)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/hex4d0r/GUI-for-GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/cheytacllc/GUI-for-GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Github&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Bağış(Support)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://www.patreon.com/hex4d0r&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Patreon&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Credits&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;qt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Qt 5.11&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/ValdikSS/GoodbyeDPI&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ValdikSS/GoodByeDPI&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/jedisct1/dnscrypt-proxy&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;dnscrypt-proxy&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;http://www.nirsoft.net/utils/quick_set_dns.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;QuickSetDns&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </item>
   </layout>

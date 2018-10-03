@@ -10,13 +10,15 @@
 #include <memory>
 #include <QTime>
 #include <QTimer>
-#include <windows.h>
 
 void MainWindow::timer()
 {
+    if(settings->value("System/systemSchedule").toBool())
+    {
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
     timer->start(10000);
+    }
 }
 
 
@@ -134,9 +136,11 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     //connect(ayarlar, SIGNAL(isClosed()), this, SLOT(timer()));
     connect(proc, &QProcess::errorOccurred, this, &MainWindow::catchError);
     //ui->btnStart->setText(QTime::currentTime().toString());
+    if(settings->value("System/systemSchedule").toBool())
     timer();
 
-
+    ui->debugArea->ensureCursorVisible();
+    ui->debugArea->setCenterOnScroll(true);
 
 
 }
@@ -178,7 +182,7 @@ void MainWindow::changeDns(QString dns)
 {
     QProcess procdns;
     procdns.setNativeArguments("/SetDNS "+dns);
-    procdns.start(QDir::currentPath()+"/dnscrypt-proxy/QuickSetDNS.exe",QProcess::ReadOnly);
+    procdns.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/QuickSetDNS.exe",QProcess::ReadOnly);
     procdns.waitForFinished(1000);
 }
 
@@ -186,7 +190,8 @@ void MainWindow::dnsCrypt(QString arg)
 {
     QProcess procDnsCrypt;
     procDnsCrypt.setNativeArguments(arg);
-    procDnsCrypt.start(QDir::currentPath()+"/dnscrypt-proxy/dnscrypt-proxy.exe",QProcess::ReadOnly);
+    procDnsCrypt.setReadChannel(QProcess::StandardOutput);
+    procDnsCrypt.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/dnscrypt-proxy.exe",QProcess::ReadOnly);
     procDnsCrypt.waitForFinished(1000);
     //procDnsCrypt->close();
 }
@@ -197,7 +202,7 @@ void MainWindow::procStart()
     proc->setArguments(prepareParameters(ui->comboParametre->isEnabled()));
     //ui->debugArea->appendPlainText("[*] " + ui->comboParametre->currentText());
     //ui->debugArea->appendPlainText("Exe Path: " + QDir::currentPath() + "/goodbyedpi/goodbyedpi.exe");
-    proc->start(QDir::currentPath() + "/goodbyedpi/goodbyedpi.exe", QProcess::ReadOnly);
+    proc->start(QApplication::applicationDirPath()+"/goodbyedpi/goodbyedpi.exe", QProcess::ReadOnly);
     proc->waitForStarted(1000);
 
     if(!settings->value("System/disableNotifications").toBool())
@@ -209,7 +214,9 @@ void MainWindow::procStart()
     trayIcon->setIcon(QIcon(":/images/images/icon.ico"));
     changeDns("127.0.0.1");
     dnsCrypt(" -service install");
-    dnsCrypt(" -service start");
+    dnsCrypt(" -service start -loglevel=0 -logfile=log.txt");
+    //ui->btnStart->setText(QApplication::applicationDirPath());
+
 }
 
 void MainWindow::procStop()
@@ -226,36 +233,49 @@ void MainWindow::procStop()
     dnsCrypt(" -service stop");
     dnsCrypt(" -service uninstall");
     changeDns("");
+    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
 }
 
 void MainWindow::checkTime()
 {
-    for(int i=1;i<8;i++)
+    if(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/Enabled").toBool())
     {
-        if(QDate::currentDate().dayOfWeek()==i)
+        if((QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleStart").toString()).hour()<=QTime::currentTime().hour()&&QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleStart").toString()).minute()<=QTime::currentTime().minute())&&(QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleEnd").toString()).hour()>=QTime::currentTime().hour()&&QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleEnd").toString()).minute()>=QTime::currentTime().minute()))
         {
-            if(settings->value("System/D"+QString::number(i)+"/Enabled").toBool())
-            {
-                if(settings->value("System/D"+QString::number(i)+"/systemScheduleStart").toString().remove(5,7)==QTime::currentTime().toString().remove(5,7))
-                    ui->btnStart->click();
-                if(settings->value("System/D"+QString::number(i)+"/systemScheduleEnd").toString().remove(5,7)==QTime::currentTime().toString().remove(5,7))
-                    ui->btnStop->click();
-            }
+            if(proc->state()==QProcess::NotRunning)
+                ui->btnStart->click();
         }
+        else
+            if(proc->state()==QProcess::Running)
+                ui->btnStop->click();
     }
-
 }
 
 void MainWindow::processOutput()
 {
+    ui->debugArea->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    ui->debugArea->setFocusPolicy(Qt::NoFocus);
     proc->setReadChannel(QProcess::StandardOutput);
     QString output = proc->readAllStandardOutput();
 
     if(!output.isEmpty())
     {
         ui->debugArea->appendPlainText(output);
+
     }
+
+    QFile file(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
+    file.open(QIODevice::ReadOnly);
+    QString line;
+    QTextStream stream(&file);
+    while (!stream.atEnd())
+    {
+        line = stream.readLine();
+        ui->debugArea->appendPlainText(line);
+    }
+
 }
+
 
 void MainWindow::processError()
 {

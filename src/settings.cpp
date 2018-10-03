@@ -2,6 +2,10 @@
 #include "ui_settings.h"
 #include "mysettings.h"
 #include <QDebug>
+#include <QProcess>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomNodeList>
+#include <QtXml/QDomElement>
 
 
 Settings::Settings(QWidget *parent) :
@@ -139,6 +143,8 @@ Settings::~Settings()
     delete ui;
 }
 
+
+
 void Settings::closeEvent(QCloseEvent *event)
 {
     if(this->isVisible() || this->isTopLevel())
@@ -233,19 +239,33 @@ void Settings::onCheckedSystemTray()
     }
 }
 
+void Settings::schtasks(QString arg)
+{
+    QProcess startupTask;
+    startupTask.setNativeArguments(arg);
+    startupTask.start("cmd.exe /c %SYSTEMROOT%\\system32\\schtasks.exe");
+    startupTask.waitForFinished(1000);
+}
+
+
 void Settings::onCheckedStartup()
 {
-    QSettings startup("HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
-    if(ui->startupBox->checkState() == Qt::Checked)
+
+    if(ui->startupBox->checkState()==Qt::Checked)
     {
         QString appPath = QCoreApplication::applicationFilePath();
         appPath.replace("/", "\\");
-        startup.setValue(QApplication::applicationName(), QString(appPath + " -silent").toStdString().c_str());
+
+        schtasks(" /CREATE /RU BUILTIN\\Users /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC ONLOGON /F");
+        schtasks(" /CHANGE /V1 /TN "+QApplication::applicationName()+" /F");
+//        schtasks(" /CHANGE /RU BUILTIN\\Users /TN "+QApplication::applicationName()+" /F");
+//        schtasks(" /CHANGE /TR "+appPath+"\"-silent\" /TN "+QApplication::applicationName()+" /F");
+//        ui->startupBox->setToolTip(appPath);
         ayarR->setValue("System/systemStartup", true);
     }
     else
     {
-        startup.remove(QApplication::applicationName());
+        schtasks(" /DELETE /TN "+QApplication::applicationName()+" /F");
         ayarR->setValue("System/systemStartup", false);
     }
 }
@@ -957,3 +977,4 @@ void Settings::on_checkBox_7_toggled(bool checked)
     ayarR->setValue("System/D7/Enabled",checked);
 
 }
+

@@ -475,48 +475,6 @@
       <attribute name="title">
        <string>Çalışma Ayarları</string>
       </attribute>
-      <widget class="QCheckBox" name="scheduleBox">
-       <property name="geometry">
-        <rect>
-         <x>9</x>
-         <y>62</y>
-         <width>291</width>
-         <height>19</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Çalışma Saatleri Ayarla</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="trayBox">
-       <property name="geometry">
-        <rect>
-         <x>9</x>
-         <y>9</y>
-         <width>135</width>
-         <height>19</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Sistem Tepsisine Küçült</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="startupBox">
-       <property name="geometry">
-        <rect>
-         <x>9</x>
-         <y>35</y>
-         <width>160</width>
-         <height>19</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Başlangıçta Otomatik Çalıştır</string>
-       </property>
-      </widget>
       <widget class="QGroupBox" name="scheduleSettings">
        <property name="enabled">
         <bool>false</bool>
@@ -525,7 +483,7 @@
         <rect>
          <x>9</x>
          <y>90</y>
-         <width>420</width>
+         <width>631</width>
          <height>406</height>
         </rect>
        </property>
@@ -577,6 +535,9 @@
                   <spacer name="horizontalSpacer_6">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -677,6 +638,9 @@
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
                      <width>40</width>
@@ -775,6 +739,9 @@
                   <spacer name="horizontalSpacer_11">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -875,6 +842,9 @@
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
                      <width>40</width>
@@ -973,6 +943,9 @@
                   <spacer name="horizontalSpacer_15">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -1073,6 +1046,9 @@
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
                      <width>40</width>
@@ -1172,6 +1148,9 @@
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
                      <width>40</width>
@@ -1231,52 +1210,84 @@
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>328</x>
+         <x>9</x>
          <y>9</y>
-         <width>136</width>
-         <height>51</height>
+         <width>306</width>
+         <height>73</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <layout class="QHBoxLayout" name="horizontalLayout_39">
         <item>
-         <widget class="QCheckBox" name="notificationBox">
-          <property name="text">
-           <string>Bildirimleri Kapat</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QLabel" name="label_3">
+           <widget class="QCheckBox" name="trayBox">
             <property name="text">
-             <string>Skin</string>
+             <string>Sistem Tepsisine Küçült</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox">
-            <item>
-             <property name="text">
-              <string>Vista</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Windows Classic</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Fusion Light</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Fusion Dark</string>
-             </property>
-            </item>
+           <widget class="QCheckBox" name="startupBox">
+            <property name="text">
+             <string>Başlangıçta Otomatik Çalıştır</string>
+            </property>
            </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="scheduleBox">
+            <property name="text">
+             <string>Çalışma Saatleri Ayarla</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QCheckBox" name="notificationBox">
+            <property name="text">
+             <string>Bildirimleri Kapat</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Skin</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox">
+              <item>
+               <property name="text">
+                <string>Vista</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Windows Classic</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Fusion Light</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Fusion Dark</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
