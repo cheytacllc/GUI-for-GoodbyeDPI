@@ -4,12 +4,13 @@
 
 > İndirme Bağlantıları
 >
->[32 Bit](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.5/GoodByeDPI_GUI_32Bit.zip)
+>[32 Bit](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.6/GoodByeDPI_GUI_32Bit.zip)
 >
->[64 Bit](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.5/GoodByeDPI_GUI_64Bit.zip)
+>[64 Bit](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.6/GoodByeDPI_GUI_64Bit.zip)
 
 # Kullanım
 
+**Uygulamayı adında boşluk olan dizinlere çıkarmayın, çalıştırdığınızda hata verecektir**
 Parametrelerin tam olarak kayıt edilebilmesi için Ayarlar penceresini **kapatıp** çalıştırmanız gerekli. Sonraki güncellemede eklenecek. Ana ekrandaki **Log** bölümünden uygulamanın düzgün çalışıp çalışmadığını kontrol edebilirsiniz, herhangi bir problem yaşadığınızda bildirmekten çekinmeyin.
 
 > 64Bit Sürümü kullanmak için VC++ 2017 paketini yüklemeniz gerekmektedir.
