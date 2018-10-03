@@ -13,12 +13,9 @@
 
 void MainWindow::timer()
 {
-    if(settings->value("System/systemSchedule").toBool())
-    {
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
-    timer->start(10000);
-    }
+        QTimer *timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
+        timer->start(10000);
 }
 
 
@@ -136,8 +133,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     //connect(ayarlar, SIGNAL(isClosed()), this, SLOT(timer()));
     connect(proc, &QProcess::errorOccurred, this, &MainWindow::catchError);
     //ui->btnStart->setText(QTime::currentTime().toString());
-    if(settings->value("System/systemSchedule").toBool())
-    timer();
+        timer();
 
     ui->debugArea->ensureCursorVisible();
     ui->debugArea->setCenterOnScroll(true);
@@ -238,16 +234,19 @@ void MainWindow::procStop()
 
 void MainWindow::checkTime()
 {
-    if(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/Enabled").toBool())
+    if(settings->value("System/systemSchedule").toBool())
     {
-        if((QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleStart").toString()).hour()<=QTime::currentTime().hour()&&QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleStart").toString()).minute()<=QTime::currentTime().minute())&&(QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleEnd").toString()).hour()>=QTime::currentTime().hour()&&QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleEnd").toString()).minute()>=QTime::currentTime().minute()))
+        if(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/Enabled").toBool())
         {
-            if(proc->state()==QProcess::NotRunning)
-                ui->btnStart->click();
+            if((QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleStart").toString()).hour()<=QTime::currentTime().hour()&&QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleStart").toString()).minute()<=QTime::currentTime().minute())&&(QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleEnd").toString()).hour()>=QTime::currentTime().hour()&&QTime::fromString(settings->value("System/D"+QString::number(QDate::currentDate().dayOfWeek())+"/systemScheduleEnd").toString()).minute()>=QTime::currentTime().minute()))
+            {
+                if(proc->state()==QProcess::NotRunning)
+                    ui->btnStart->click();
+            }
+            else
+                if(proc->state()==QProcess::Running)
+                    ui->btnStop->click();
         }
-        else
-            if(proc->state()==QProcess::Running)
-                ui->btnStop->click();
     }
 }
 
