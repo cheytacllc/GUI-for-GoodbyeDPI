@@ -19,6 +19,22 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <source>Sistem Tepsisine Küçült</source>
+        <translation>Minimize to Tray</translation>
+    </message>
+    <message>
+        <source>Kapat</source>
+        <translation>Exit</translation>
+    </message>
+    <message>
+        <source>Tekrar sorma</source>
+        <translation>Dont ask again</translation>
+    </message>
+    <message>
+        <source>Programdan çıkmak ya da sistem tepsisine küçültmek mi istiyorsunuz?</source>
+        <translation>Do you want exit the program or minimize to tray?</translation>
+    </message>
+    <message>
         <source>Başlat</source>
         <translation>Start</translation>
     </message>

@@ -47,7 +47,7 @@ HEADERS += \
     settings.h \
     about.h \
     mysettings.h \
-    proj.rc
+    mymessagebox.h
 
 FORMS += \
         mainwindow.ui \
@@ -56,3 +56,6 @@ FORMS += \
 
 RESOURCES += \
     res.qrc
+
+TRANSLATIONS += \
+    english.qm

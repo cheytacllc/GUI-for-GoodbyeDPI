@@ -12,6 +12,9 @@
 #include "mysettings.h"
 #include <QFile>
 #include <windows.h>
+#include "mymessagebox.h"
+#include <QCheckBox>
+#include <QPushButton>
 
 namespace Ui {
 class MainWindow;

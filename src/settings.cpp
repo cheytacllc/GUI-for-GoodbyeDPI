@@ -582,6 +582,7 @@ void Settings::resetSettings()
 
     ayarR->beginGroup("System");
     ayarR->setValue("systemTray", true);
+    ayarR->setValue("dontAsk", false);
     ayarR->setValue("systemStartup", false);
     ayarR->setValue("systemSchedule", false);
     ayarR->setValue("disableNotifications", false);
