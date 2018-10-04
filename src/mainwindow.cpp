@@ -170,7 +170,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     else
     {
+        dnsCrypt(" -service stop");
+        dnsCrypt(" -service uninstall");
+        changeDns("");
         ayarlar->close();
+        hakkinda.close();
     }
 }
 

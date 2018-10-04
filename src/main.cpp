@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
         t.load(":/english.qm");
         a.installTranslator(&t);
     }
+    QApplication::setApplicationVersion("1.0.6");
+    QApplication::setApplicationDisplayName(QApplication::applicationVersion());
 
     MainWindow w(a.arguments());
 
