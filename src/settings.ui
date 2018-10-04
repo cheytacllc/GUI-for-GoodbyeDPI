@@ -560,6 +560,16 @@
                  </item>
                  <item>
                   <widget class="QDateTimeEdit" name="endTime">
+                   <property name="dateTime">
+                    <datetime>
+                     <hour>23</hour>
+                     <minute>59</minute>
+                     <second>0</second>
+                     <year>2000</year>
+                     <month>1</month>
+                     <day>1</day>
+                    </datetime>
+                   </property>
                    <property name="displayFormat">
                     <string>HH:mm</string>
                    </property>
@@ -662,6 +672,16 @@
                  </item>
                  <item>
                   <widget class="QDateTimeEdit" name="endTime_2">
+                   <property name="dateTime">
+                    <datetime>
+                     <hour>23</hour>
+                     <minute>59</minute>
+                     <second>0</second>
+                     <year>2000</year>
+                     <month>1</month>
+                     <day>1</day>
+                    </datetime>
+                   </property>
                    <property name="displayFormat">
                     <string>HH:mm</string>
                    </property>
@@ -764,6 +784,16 @@
                  </item>
                  <item>
                   <widget class="QDateTimeEdit" name="endTime_3">
+                   <property name="dateTime">
+                    <datetime>
+                     <hour>23</hour>
+                     <minute>59</minute>
+                     <second>0</second>
+                     <year>2000</year>
+                     <month>1</month>
+                     <day>1</day>
+                    </datetime>
+                   </property>
                    <property name="displayFormat">
                     <string>HH:mm</string>
                    </property>
@@ -866,6 +896,16 @@
                  </item>
                  <item>
                   <widget class="QDateTimeEdit" name="endTime_4">
+                   <property name="dateTime">
+                    <datetime>
+                     <hour>23</hour>
+                     <minute>59</minute>
+                     <second>0</second>
+                     <year>2000</year>
+                     <month>1</month>
+                     <day>1</day>
+                    </datetime>
+                   </property>
                    <property name="displayFormat">
                     <string>HH:mm</string>
                    </property>
@@ -968,6 +1008,16 @@
                  </item>
                  <item>
                   <widget class="QDateTimeEdit" name="endTime_5">
+                   <property name="dateTime">
+                    <datetime>
+                     <hour>23</hour>
+                     <minute>59</minute>
+                     <second>0</second>
+                     <year>2000</year>
+                     <month>1</month>
+                     <day>1</day>
+                    </datetime>
+                   </property>
                    <property name="displayFormat">
                     <string>HH:mm</string>
                    </property>
@@ -1070,6 +1120,16 @@
                  </item>
                  <item>
                   <widget class="QDateTimeEdit" name="endTime_6">
+                   <property name="dateTime">
+                    <datetime>
+                     <hour>23</hour>
+                     <minute>59</minute>
+                     <second>0</second>
+                     <year>2000</year>
+                     <month>1</month>
+                     <day>1</day>
+                    </datetime>
+                   </property>
                    <property name="displayFormat">
                     <string>HH:mm</string>
                    </property>
@@ -1172,6 +1232,16 @@
                  </item>
                  <item>
                   <widget class="QDateTimeEdit" name="endTime_7">
+                   <property name="dateTime">
+                    <datetime>
+                     <hour>23</hour>
+                     <minute>59</minute>
+                     <second>0</second>
+                     <year>2000</year>
+                     <month>1</month>
+                     <day>1</day>
+                    </datetime>
+                   </property>
                    <property name="displayFormat">
                     <string>HH:mm</string>
                    </property>

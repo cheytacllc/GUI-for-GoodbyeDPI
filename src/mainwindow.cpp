@@ -38,11 +38,11 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 
     ui->setupUi(this);
     mySettings::setTheme(mySettings::loadTheme());
-    setWindowTitle("GoodByeDPI GUI");
+    setWindowTitle("GoodByeDPI GUI 1.0.6");
     setWindowIcon(QIcon(":/images/images/icon.ico"));
 
     trayIcon->setIcon(QIcon(":/images/images/stopped_icon.ico"));
-    trayIcon->setToolTip("GoodByeDPI GUI");
+    trayIcon->setToolTip("GoodByeDPI GUI 1.0.6");
     trayIcon->setVisible(true);
     trayIcon->show();
     ui->labelParameters->setWordWrap(true);
