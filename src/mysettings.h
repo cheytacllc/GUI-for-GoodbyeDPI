@@ -24,18 +24,16 @@ public:
     static int loadTheme()
     {
         int theme;
-        QSettings s("settings.ini",QSettings::IniFormat);  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
-        s.beginGroup("Settings");
-        theme=s.value("Theme",vista).toInt(); //default theme is standard system theme
+        QSettings s("HexOpenSource", "GBDPI-GUI");  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
+        theme=s.value("System/Skin",lightFusion).toInt(); //default theme is standard system theme
         s.endGroup();
         return theme;
     }
 
     static void setTheme(int theme)
     {
-        QSettings s("settings.ini",QSettings::IniFormat);  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
-        s.beginGroup("Settings");
-        s.setValue("Theme",theme);
+        QSettings s("HexOpenSource", "GBDPI-GUI");  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
+        s.setValue("System/Skin",theme);
         s.endGroup();
 
         switch (theme)
@@ -97,7 +95,7 @@ public:
     template <class T>
     static void writeSettings(QString key, T option)
     {
-        QSettings s("settings.ini",QSettings::IniFormat);  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
+        QSettings s("HexOpenSource", "GBDPI-GUI");  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
         s.beginGroup("Settings");
         s.setValue(key, option);
         s.endGroup();
@@ -106,7 +104,7 @@ public:
     static QVariant readSettings(QString key)
     {
         QVariant val;
-        QSettings s("settings.ini",QSettings::IniFormat);  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
+        QSettings s("HexOpenSource", "GBDPI-GUI");  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
         s.beginGroup("Settings");
         val=s.value(key);
         s.endGroup();
