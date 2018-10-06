@@ -15,6 +15,9 @@
 #include "mymessagebox.h"
 #include <QCheckBox>
 #include <QPushButton>
+#include <QListWidget>
+#include <QTime>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +35,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 public slots:
+    void addItemListWidget(QString filename, QListWidget *widget);
     void changeDns(QString dns);
     void dnsCrypt(QString arg);
     void procStart();

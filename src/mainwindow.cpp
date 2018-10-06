@@ -8,8 +8,7 @@
 #include <QDirIterator>
 #include <QListIterator>
 #include <memory>
-#include <QTime>
-#include <QTimer>
+
 
 void MainWindow::timer()
 {
@@ -37,6 +36,9 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 {
 
     ui->setupUi(this);
+    restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
+    restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
+    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
     mySettings::setTheme(mySettings::loadTheme());
     setWindowTitle("GoodByeDPI GUI 1.0.6");
     setWindowIcon(QIcon(":/images/images/icon.ico"));
@@ -136,8 +138,8 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     changeDns("");
         timer();
 
-    ui->debugArea->ensureCursorVisible();
-    ui->debugArea->setCenterOnScroll(true);
+//    ui->debugArea->ensureCursorVisible();
+//    ui->debugArea->setCenterOnScroll(true);
 
 
 }
@@ -147,6 +149,9 @@ MainWindow::~MainWindow()
     dnsCrypt(" -service stop");
     dnsCrypt(" -service uninstall");
     changeDns("");
+    mySettings::writeSettings("System/Geometry/Main", saveGeometry());
+    mySettings::writeSettings("System/WindowState/Main", saveState());
+    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
     delete ui;
     proc->kill();
 }
@@ -223,7 +228,22 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 
 
+}
+
+void MainWindow::addItemListWidget(QString filename, QListWidget *widget)
+{
+    QFile file(QApplication::applicationDirPath()+filename);
+    file.open(QIODevice::ReadOnly);
+    QString line;
+    QTextStream stream(&file);
+    while (!stream.atEnd())
+    {
+        line = stream.readLine();
+        widget->addItem(line);
     }
+    widget->scrollToBottom();
+    file.close();
+}
 
 
 void MainWindow::changeDns(QString dns)
@@ -265,6 +285,7 @@ void MainWindow::procStart()
     dnsCrypt(" -service start -loglevel=0 -logfile=log.txt");
     //ui->btnStart->setText(QApplication::applicationDirPath());
 
+
 }
 
 void MainWindow::procStop()
@@ -282,6 +303,7 @@ void MainWindow::procStop()
     dnsCrypt(" -service uninstall");
     changeDns("");
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
+    ui->listWidget->scrollToBottom();
 }
 
 void MainWindow::checkTime()
@@ -304,27 +326,19 @@ void MainWindow::checkTime()
 
 void MainWindow::processOutput()
 {
-    ui->debugArea->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    ui->debugArea->setFocusPolicy(Qt::NoFocus);
+//    ui->debugArea->setTextInteractionFlags(Qt::TextBrowserInteraction);
+//    ui->debugArea->setFocusPolicy(Qt::NoFocus);
     proc->setReadChannel(QProcess::StandardOutput);
     QString output = proc->readAllStandardOutput();
 
     if(!output.isEmpty())
     {
-        ui->debugArea->appendPlainText(output);
+        ui->listWidget->addItem(output);
 
     }
 
-    QFile file(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
-    file.open(QIODevice::ReadOnly);
-    QString line;
-    QTextStream stream(&file);
-    while (!stream.atEnd())
-    {
-        line = stream.readLine();
-        ui->debugArea->appendPlainText(line);
-    }
-
+addItemListWidget("/dnscrypt-proxy/log.txt", ui->listWidget);
+ui->listWidget->scrollToBottom();
 }
 
 
@@ -334,14 +348,15 @@ void MainWindow::processError()
     QString errout = proc->readAllStandardError();
     if(!errout.isEmpty())
     {
-        ui->debugArea->appendPlainText(proc->errorString());
+        ui->listWidget->addItem(proc->errorString());
     }
+    ui->listWidget->scrollToBottom();
 }
 void MainWindow::handleState()
 {
     if(proc->state() == QProcess::NotRunning)
     {
-        ui->debugArea->appendPlainText(tr("[-] Durduruldu"));
+        ui->listWidget->addItem(tr("[-] Durduruldu"));
         ui->btnStart->setEnabled(true);
         ui->btnStop->setEnabled(false);
         trayMenu->actions().at(1)->setEnabled(false);
@@ -349,12 +364,13 @@ void MainWindow::handleState()
     }
     else if(proc->state() == QProcess::Running)
     {
-        ui->debugArea->appendPlainText(tr("[+] Başlatıldı\n[+] PID:") + QString::number(proc->processId()) + "\n");
+        ui->listWidget->addItem(tr("[+] Başlatıldı\n[+] PID:") + QString::number(proc->processId()) + "\n");
         ui->btnStart->setEnabled(false);
         ui->btnStop->setEnabled(true);
         trayMenu->actions().at(0)->setEnabled(false);
         trayMenu->actions().at(1)->setEnabled(true);
     }
+    ui->listWidget->scrollToBottom();
 }
 
 void MainWindow::RestoreWindowTrigger(QSystemTrayIcon::ActivationReason RW)
@@ -513,5 +529,6 @@ QStringList MainWindow::prepareParameters(bool isComboParametreEnabled)
 
 void MainWindow::catchError(QProcess::ProcessError err)
 {
-    ui->debugArea->appendPlainText(proc->errorString());
+    ui->listWidget->addItem(proc->errorString());
+    ui->listWidget->scrollToBottom();
 }

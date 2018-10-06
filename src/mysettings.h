@@ -96,7 +96,6 @@ public:
     static void writeSettings(QString key, T option)
     {
         QSettings s("HexOpenSource", "GBDPI-GUI");  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
-        s.beginGroup("Settings");
         s.setValue(key, option);
         s.endGroup();
     }
@@ -105,7 +104,6 @@ public:
     {
         QVariant val;
         QSettings s("HexOpenSource", "GBDPI-GUI");  // ayarlar registryde saklanmasi icin -> QSettings s("m231",QApplication::applicationName());
-        s.beginGroup("Settings");
         val=s.value(key);
         s.endGroup();
         return val;

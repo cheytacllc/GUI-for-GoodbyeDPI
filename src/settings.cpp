@@ -23,6 +23,7 @@ Settings::Settings(QWidget *parent) :
     ui(new Ui::Settings)
 {
     ui->setupUi(this);
+    restoreGeometry(mySettings::readSettings("System/Geometry/Settings").toByteArray());
     ui->comboBox->setCurrentIndex(mySettings::loadTheme());
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
     setWindowIcon(QIcon(":/images/images/settings-gears-button.png"));
@@ -147,6 +148,7 @@ Settings::~Settings()
 
 void Settings::closeEvent(QCloseEvent *event)
 {
+    mySettings::writeSettings("System/Geometry/Settings", saveGeometry());
     event->ignore();
     //this->hide();
 
