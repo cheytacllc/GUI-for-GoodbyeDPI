@@ -9,15 +9,6 @@
 #include <QListIterator>
 #include <memory>
 
-
-void MainWindow::timer()
-{
-        QTimer *timer = new QTimer(this);
-        connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
-        timer->start(10000);
-}
-
-
 MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     QMainWindow(parent),
     ayarlar(new Settings()),
@@ -132,16 +123,9 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
         showAction->setEnabled(true);
     }
 
-    //connect(ayarlar, SIGNAL(isClosed()), this, SLOT(timer()));
     connect(proc, &QProcess::errorOccurred, this, &MainWindow::catchError);
-    //ui->btnStart->setText(QTime::currentTime().toString());
     changeDns("");
-        timer();
-
-//    ui->debugArea->ensureCursorVisible();
-//    ui->debugArea->setCenterOnScroll(true);
-
-
+    timer();
 }
 
 MainWindow::~MainWindow()
@@ -158,76 +142,80 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-        event->ignore();
-        MyMessageBox msgBox;
-        QPushButton *tray=msgBox.addButton(tr("Sistem Tepsisine Küçült"),QMessageBox::ActionRole);
-        QPushButton *close=msgBox.addButton(tr("Kapat"),QMessageBox::ActionRole);
-        QCheckBox *dontAsk = new QCheckBox(tr("Tekrar sorma"),this);
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.setText(tr("Programdan çıkmak ya da sistem tepsisine küçültmek mi istiyorsunuz?"));
-        msgBox.setCheckBox(dontAsk);
-        if(settings->value("System/dontAsk").isNull())
-            settings->setValue("System/dontAsk",false);
-        if(settings->value("System/dontAsk").toBool())
+    event->ignore();
+    MyMessageBox msgBox;
+    QPushButton *tray=msgBox.addButton(tr("Sistem Tepsisine Küçült"),QMessageBox::ActionRole);
+    QPushButton *close=msgBox.addButton(tr("Kapat"),QMessageBox::ActionRole);
+    QCheckBox *dontAsk = new QCheckBox(tr("Tekrar sorma"),this);
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setText(tr("Programdan çıkmak ya da sistem tepsisine küçültmek mi istiyorsunuz?"));
+    msgBox.setCheckBox(dontAsk);
+    if(settings->value("System/dontAsk").isNull())
+        settings->setValue("System/dontAsk",false);
+    if(settings->value("System/dontAsk").toBool())
+    {
+        settings->setValue("System/dontAsk",true);
+        if(settings->value("System/systemTray").toString() == "true" && (this->isTopLevel() || this->isVisible()))
         {
-            settings->setValue("System/dontAsk",true);
-            if(settings->value("System/systemTray").toString() == "true" && (this->isTopLevel() || this->isVisible()))
-            {
-                this->hide();
-                trayIcon->show();
-                trayMenu->actions().at(4)->setEnabled(true);
-                trayMenu->actions().at(5)->setEnabled(false);
+            this->hide();
+            trayIcon->show();
+            trayMenu->actions().at(4)->setEnabled(true);
+            trayMenu->actions().at(5)->setEnabled(false);
 
-                if(!settings->value("System/disableNotifications").toBool())
-                {
-                    qDebug() << "Message will shown";
-                    QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
-                    trayIcon->showMessage("GoodByeDPI GUI", tr("Arka planda çalışıyor."), icon, 1000);
-                }
-            }
-            else
+            if(!settings->value("System/disableNotifications").toBool())
             {
-                dnsCrypt(" -service stop");
-                dnsCrypt(" -service uninstall");
-                changeDns("");
-                ayarlar->close();
-                hakkinda.close();
-                event->accept();
+                qDebug() << "Message will shown";
+                QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
+                trayIcon->showMessage("GoodByeDPI GUI", tr("Arka planda çalışıyor."), icon, 1000);
             }
         }
         else
         {
-            msgBox.exec();
-            if(dontAsk->isChecked())
-                settings->setValue("System/dontAsk",true);
-            if(msgBox.clickedButton()==tray)
+            dnsCrypt(" -service stop");
+            dnsCrypt(" -service uninstall");
+            changeDns("");
+            ayarlar->close();
+            hakkinda.close();
+            event->accept();
+        }
+    }
+    else
+    {
+        msgBox.exec();
+        if(dontAsk->isChecked())
+            settings->setValue("System/dontAsk",true);
+        if(msgBox.clickedButton()==tray)
+        {
+            settings->setValue("System/systemTray",true);
+            this->hide();
+            trayIcon->show();
+            trayMenu->actions().at(4)->setEnabled(true);
+            trayMenu->actions().at(5)->setEnabled(false);
+            if(!settings->value("System/disableNotifications").toBool())
             {
-                settings->setValue("System/systemTray",true);
-                this->hide();
-                trayIcon->show();
-                trayMenu->actions().at(4)->setEnabled(true);
-                trayMenu->actions().at(5)->setEnabled(false);
-                if(!settings->value("System/disableNotifications").toBool())
-                {
-                    qDebug() << "Message will shown";
-                    QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
-                    trayIcon->showMessage("GoodByeDPI GUI", tr("Arka planda çalışıyor."), icon, 1000);
-                }
-            }
-            else
-            {
-                settings->setValue("System/systemTray",false);
-                dnsCrypt(" -service stop");
-                dnsCrypt(" -service uninstall");
-                changeDns("");
-                ayarlar->close();
-                hakkinda.close();
-                event->accept();
+                qDebug() << "Message will shown";
+                QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
+                trayIcon->showMessage("GoodByeDPI GUI", tr("Arka planda çalışıyor."), icon, 1000);
             }
         }
+        else
+        {
+            settings->setValue("System/systemTray",false);
+            dnsCrypt(" -service stop");
+            dnsCrypt(" -service uninstall");
+            changeDns("");
+            ayarlar->close();
+            hakkinda.close();
+            event->accept();
+        }
+    }
+}
 
-
-
+void MainWindow::timer()
+{
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(checkTime()));
+    timer->start(10000);
 }
 
 void MainWindow::addItemListWidget(QString filename, QListWidget *widget)
@@ -261,7 +249,6 @@ void MainWindow::dnsCrypt(QString arg)
     procDnsCrypt.setReadChannel(QProcess::StandardOutput);
     procDnsCrypt.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/dnscrypt-proxy.exe",QProcess::ReadOnly);
     procDnsCrypt.waitForFinished(1500);
-    //procDnsCrypt->close();
 }
 
 
@@ -283,9 +270,6 @@ void MainWindow::procStart()
     changeDns("127.0.0.1");
     dnsCrypt(" -service install");
     dnsCrypt(" -service start -loglevel=0 -logfile=log.txt");
-    //ui->btnStart->setText(QApplication::applicationDirPath());
-
-
 }
 
 void MainWindow::procStop()
@@ -326,19 +310,16 @@ void MainWindow::checkTime()
 
 void MainWindow::processOutput()
 {
-//    ui->debugArea->setTextInteractionFlags(Qt::TextBrowserInteraction);
-//    ui->debugArea->setFocusPolicy(Qt::NoFocus);
     proc->setReadChannel(QProcess::StandardOutput);
     QString output = proc->readAllStandardOutput();
 
     if(!output.isEmpty())
     {
         ui->listWidget->addItem(output);
-
     }
 
-addItemListWidget("/dnscrypt-proxy/log.txt", ui->listWidget);
-ui->listWidget->scrollToBottom();
+    addItemListWidget("/dnscrypt-proxy/log.txt", ui->listWidget);
+    ui->listWidget->scrollToBottom();
 }
 
 

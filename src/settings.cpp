@@ -150,17 +150,6 @@ void Settings::closeEvent(QCloseEvent *event)
 {
     mySettings::writeSettings("System/Geometry/Settings", saveGeometry());
     event->ignore();
-    //this->hide();
-
-//    if(this->isVisible() || this->isTopLevel())
-//    {
-//        event->ignore();
-//        this->hide();
-//    }
-//    else
-//    {
-//    }
-
     emit defaultParamStateChanged(ui->checkDefaultParam->checkState());
     ayarR->setValue("System/systemSchedule", ui->scheduleBox->isChecked());
     if(ui->scheduleBox->isChecked())
@@ -187,7 +176,6 @@ void Settings::closeEvent(QCloseEvent *event)
         ayarR->setValue("System/D7/systemScheduleEnd", ui->endTime_7->time().toString());
     }
     emit isClosed();
-    //event->accept();
     this->hide();
 }
 
