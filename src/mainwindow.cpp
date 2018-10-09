@@ -31,11 +31,11 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
     mySettings::setTheme(mySettings::loadTheme());
-    setWindowTitle("GoodByeDPI GUI 1.0.6");
+    setWindowTitle("GoodByeDPI GUI 1.0.7");
     setWindowIcon(QIcon(":/images/images/icon.ico"));
 
     trayIcon->setIcon(QIcon(":/images/images/stopped_icon.ico"));
-    trayIcon->setToolTip("GoodByeDPI GUI 1.0.6");
+    trayIcon->setToolTip("GoodByeDPI GUI 1.0.7");
     trayIcon->setVisible(true);
     trayIcon->show();
     ui->labelParameters->setWordWrap(true);
@@ -130,8 +130,9 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    dnsCrypt(" -service stop");
-    dnsCrypt(" -service uninstall");
+    //dnsCrypt(" -service stop");
+    //dnsCrypt(" -service uninstall");
+    procDnsCrypt.close();
     changeDns("");
     mySettings::writeSettings("System/Geometry/Main", saveGeometry());
     mySettings::writeSettings("System/WindowState/Main", saveState());
@@ -171,8 +172,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
         }
         else
         {
-            dnsCrypt(" -service stop");
-            dnsCrypt(" -service uninstall");
+            //dnsCrypt(" -service stop");
+            //dnsCrypt(" -service uninstall");
+            procDnsCrypt.close();
             changeDns("");
             ayarlar->close();
             hakkinda.close();
@@ -201,8 +203,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
         else
         {
             settings->setValue("System/systemTray",false);
-            dnsCrypt(" -service stop");
-            dnsCrypt(" -service uninstall");
+            //dnsCrypt(" -service stop");
+            //dnsCrypt(" -service uninstall");
+            procDnsCrypt.close();
             changeDns("");
             ayarlar->close();
             hakkinda.close();
@@ -218,19 +221,33 @@ void MainWindow::timer()
     timer->start(10000);
 }
 
-void MainWindow::addItemListWidget(QString filename, QListWidget *widget)
+
+void MainWindow::addItemListWidget()
 {
-    QFile file(QApplication::applicationDirPath()+filename);
+    QFile file(QApplication::applicationDirPath()+"/dnscrypt-proxy/log.txt");
     file.open(QIODevice::ReadOnly);
     QString line;
+    bool isFinish=false;
     QTextStream stream(&file);
     while (!stream.atEnd())
     {
+        stream.seek(seeklog);
         line = stream.readLine();
-        widget->addItem(line);
+        if(line.contains("live servers", Qt::CaseInsensitive))
+            isFinish=true;
+        if(line!="")
+            ui->listWidget_2->addItem(line);
+        ui->listWidget_2->scrollToBottom();
+        seeklog=stream.pos();
     }
-    widget->scrollToBottom();
-    file.close();
+    if(isFinish)
+    {
+        logtimer->stop();
+        ui->listWidget_2->item(ui->listWidget_2->count()-2)->setSelected(true);
+        ui->listWidget_2->addItem("");
+        seeklog=0;
+    }
+        file.close();
 }
 
 
@@ -244,10 +261,10 @@ void MainWindow::changeDns(QString dns)
 
 void MainWindow::dnsCrypt(QString arg)
 {
-    QProcess procDnsCrypt;
     procDnsCrypt.setNativeArguments(arg);
     procDnsCrypt.setReadChannel(QProcess::StandardOutput);
     procDnsCrypt.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/dnscrypt-proxy.exe",QProcess::ReadOnly);
+    ui->listWidget->addItem(procDnsCrypt.readAllStandardOutput());
     procDnsCrypt.waitForFinished(1500);
 }
 
@@ -268,8 +285,10 @@ void MainWindow::procStart()
     }
     trayIcon->setIcon(QIcon(":/images/images/icon.ico"));
     changeDns("127.0.0.1");
-    dnsCrypt(" -service install");
-    dnsCrypt(" -service start -loglevel=0 -logfile=log.txt");
+    //dnsCrypt(" -service install");
+    dnsCrypt(" -logfile=log.txt");
+
+
 }
 
 void MainWindow::procStop()
@@ -283,8 +302,9 @@ void MainWindow::procStop()
         trayIcon->showMessage("GoodByeDPI GUI", tr("Durduruldu."), icon, 1000);
     }
     trayIcon->setIcon(QIcon(":/images/images/stopped_icon.ico"));
-    dnsCrypt(" -service stop");
-    dnsCrypt(" -service uninstall");
+    //    dnsCrypt(" -service stop");
+    //    dnsCrypt(" -service uninstall");
+    procDnsCrypt.close();
     changeDns("");
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
     ui->listWidget->scrollToBottom();
@@ -317,9 +337,12 @@ void MainWindow::processOutput()
     {
         ui->listWidget->addItem(output);
     }
-
-    addItemListWidget("/dnscrypt-proxy/log.txt", ui->listWidget);
     ui->listWidget->scrollToBottom();
+
+    logtimer = new QTimer(this);
+    logtimer->start(1500);
+    connect(logtimer, SIGNAL(timeout()), this, SLOT(addItemListWidget()));
+
 }
 
 
@@ -345,7 +368,7 @@ void MainWindow::handleState()
     }
     else if(proc->state() == QProcess::Running)
     {
-        ui->listWidget->addItem(tr("[+] Başlatıldı\n[+] PID:") + QString::number(proc->processId()) + "\n");
+        ui->listWidget->addItem(tr("[+] Başlatıldı\n[+] PID:") + QString::number(proc->processId()));
         ui->btnStart->setEnabled(false);
         ui->btnStop->setEnabled(true);
         trayMenu->actions().at(0)->setEnabled(false);

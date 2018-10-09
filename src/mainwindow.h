@@ -29,13 +29,16 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QStringList, QWidget *parent = 0);
+    QProcess procDnsCrypt;
+    QTimer *logtimer;
+    qint64 seeklog=0;
     ~MainWindow();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
 
 public slots:
-    void addItemListWidget(QString filename, QListWidget *widget);
+    void addItemListWidget();
     void changeDns(QString dns);
     void dnsCrypt(QString arg);
     void procStart();
