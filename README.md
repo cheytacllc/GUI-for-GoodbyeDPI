@@ -2,20 +2,20 @@
 
 [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI) isimli anti sansür uygulaması için kullanıcı arayüzü ile kolay kullanım sağlar.
 
-> İndirme Bağlantıları
+> İndirme Bağlantısı (Artık 32 ve 64 bit ayrımı yok!)
 >
->[32 Bit](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.7/GoodByeDPI_GUI_32Bit.zip)
+>[32 ve 64 Bit](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.8/GoodByeDPI_GUI.zip)
 >
->[64 Bit](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.7/GoodByeDPI_GUI_64Bit.zip)
+
 
 # Kullanım
 
 **Uygulamayı adında boşluk olan dizinlere çıkarmayın, çalıştırdığınızda hata verecektir**
 Parametrelerin tam olarak kayıt edilebilmesi için Ayarlar penceresini **kapatıp** çalıştırmanız gerekli. Sonraki güncellemede eklenecek. Ana ekrandaki **Log** bölümünden uygulamanın düzgün çalışıp çalışmadığını kontrol edebilirsiniz, herhangi bir problem yaşadığınızda bildirmekten çekinmeyin.
 
-> 64Bit Sürümü kullanmak için VC++ 2017 paketini yüklemeniz gerekmektedir.
+> Programı kullanmak için VC++ 2015 x86 paketini yüklemeniz gerekmektedir. Dilerseniz programın dizinindeki **vc_redist.x86.exe** kurabilir ya da alttaki linkten indirebilirsiniz.
 >
-> Link: [Visual Studio 2017](https://support.microsoft.com/tr-tr/help/2977003/the-latest-supported-visual-c-downloads)
+> Link: [Visual C++ 2015](https://www.microsoft.com/tr-TR/download/details.aspx?id=52685)
 
 Başlangıçta özel bir ayar yapmanıza gerek yoktur. **Başlat** butonuna tıklayıp sansürsüz internetin keyfini çıkarabilirsiniz. Özel Ayarlar isteğe bağlı şekilde düzenlenebilir. İlk açılışta en uygun ayar **Ön Tanımlı** olarak ayarlanmıştır.
 
@@ -23,7 +23,7 @@ Başlangıçta özel bir ayar yapmanıza gerek yoktur. **Başlat** butonuna tık
 
 ## Kaynak Koddan Derleme
 
-Yazılım MSVC-2017(64Bit Versiyon) ve MinGW-5.3.0(32Bit Versiyon) versiyonları ile derlenip **test** edilmiştir. Sadece bu derleyicileri kullanma zorunluluğu yoktur. Qt Framework Online Installer ile kurulum gerçekleştirirken, **MSVC ve MinGW derleyicilerinin yüklenmesi için işaretlemeyi unutmayın**.
+Yazılım MSVC-2017(64Bit Versiyon) ve MinGW-5.3.0 ve MSVC2015(32Bit Versiyon) versiyonları ile derlenip **test** edilmiştir. Sadece bu derleyicileri kullanma zorunluluğu yoktur. Qt Framework Online Installer ile kurulum gerçekleştirirken, **MSVC ve MinGW derleyicilerinin yüklenmesi için işaretlemeyi unutmayın**.
 
 Qt Creator'ı başlattıktan sonra File - Open File tıklayıp **.pro** uzantılı dosyayı seçin. Sonraki ekranda Configure butonuna basarak derleyiciniz için gerekli ayarlamaları yaptıktan sonra Build butonuna basarak yazılımı derleyebilirsiniz. Ardından Debug veya Release dizininde windeployqt uygulaması ile yazılımın çalışabilmesi için gerekli olan Qt kütüphanelerini otomatik şekilde kopyalayabilirsiniz.
 
