@@ -17,7 +17,9 @@ Parametrelerin tam olarak kayıt edilebilmesi için Ayarlar penceresini **kapat�
 >
 > Link: [Visual C++ 2015](https://www.microsoft.com/tr-TR/download/details.aspx?id=52685)
 
-Başlangıçta özel bir ayar yapmanıza gerek yoktur. **Başlat** butonuna tıklayıp sansürsüz internetin keyfini çıkarabilirsiniz. Özel Ayarlar isteğe bağlı şekilde düzenlenebilir. İlk açılışta en uygun ayar **Ön Tanımlı** olarak ayarlanmıştır.
+Başlangıçta özel bir ayar yapmanıza gerek yoktur. **Başlat** butonuna tıklayıp sansürsüz internetin keyfini çıkarabilirsiniz. Özel Ayarlar isteğe bağlı şekilde düzenlenebilir. İlk açılışta en uygun ayar **Ön Tanımlı** olarak ayarlanmıştır. 
+
+> **İpucu: Ayarlar > Özel Parametre Kullan > Hızlı Ayarlar > [-3] -p -r -s -e 40 (better speed for HTTP and HTTPS)** seçeneğini kullandığınızda engel kalkıyorsa muhtemelen bağlantı hızınız daha iyi olacaktır.
 
 ~~Windows DNS adresini kendiniz değiştirmeniz gerekmektedir. Aksi halde kuvvetle muhtemel engellenmiş sitelere erişim sağlayamayacaksınız.~~ **Artık DNS adresini otomatik değiştiriyor**
 
