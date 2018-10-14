@@ -26,7 +26,7 @@ Settings::Settings(QWidget *parent) :
     restoreGeometry(mySettings::readSettings("System/Geometry/Settings").toByteArray());
     ui->comboBox->setCurrentIndex(mySettings::loadTheme());
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
-    setWindowIcon(QIcon(":/images/images/settings-gears-button.png"));
+    setWindowIcon(QIcon(":/images/images/256-256-setings-configuration.png"));
     setWindowTitle("Ayarlar");
 
     //Reference to QSettings for capturing it from lambda function

@@ -132,9 +132,8 @@
   </widget>
   <action name="actionAyarlar">
    <property name="icon">
-    <iconset>
-     <normalon>:/images/images/settings-gears-button.png</normalon>
-    </iconset>
+    <iconset resource="res.qrc">
+     <normaloff>:/images/images/256-256-setings-configuration.png</normaloff>:/images/images/256-256-setings-configuration.png</iconset>
    </property>
    <property name="text">
     <string>Ayarlar</string>

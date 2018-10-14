@@ -18,6 +18,7 @@
 #include <QListWidget>
 #include <QTime>
 #include <QTimer>
+#include <QSysInfo>
 
 namespace Ui {
 class MainWindow;

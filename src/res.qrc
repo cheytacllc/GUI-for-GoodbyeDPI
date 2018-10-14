@@ -11,5 +11,6 @@
         <file>images/icon.png</file>
         <file>images/qt.ico</file>
         <file>images/stopped_icon.ico</file>
+        <file>images/256-256-setings-configuration.png</file>
     </qresource>
 </RCC>

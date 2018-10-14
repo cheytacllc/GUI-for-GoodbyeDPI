@@ -20,7 +20,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     closeAction(new QAction(tr("Çıkış"), this)),
     startAction(new QAction(QIcon(":/images/images/play-button.png"), tr("Başlat"), this)),
     stopAction(new QAction(QIcon(":/images/images/stop-button.png"), tr("Durdur"), this)),
-    settingsAction(new QAction(QIcon(":/images/images/settings-gears-button.png"), tr("Ayarlar"), this)),
+    settingsAction(new QAction(QIcon(":/images/images/256-256-setings-configuration.png"), tr("Ayarlar"), this)),
     tmpDir(new QTemporaryDir()),
     proc(new QProcess(this)),
     ui(new Ui::MainWindow)
@@ -29,13 +29,13 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     ui->setupUi(this);
     restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
-    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
+    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
     mySettings::setTheme(mySettings::loadTheme());
-    setWindowTitle("GoodByeDPI GUI 1.0.7");
+    setWindowTitle("GoodByeDPI GUI 1.0.8");
     setWindowIcon(QIcon(":/images/images/icon.ico"));
-
     trayIcon->setIcon(QIcon(":/images/images/stopped_icon.ico"));
-    trayIcon->setToolTip("GoodByeDPI GUI 1.0.7");
+    setWindowIcon(QIcon(":/images/images/stopped_icon.ico"));
+    trayIcon->setToolTip("GoodByeDPI GUI 1.0.8");
     trayIcon->setVisible(true);
     trayIcon->show();
     ui->labelParameters->setWordWrap(true);
@@ -136,7 +136,7 @@ MainWindow::~MainWindow()
     changeDns("");
     mySettings::writeSettings("System/Geometry/Main", saveGeometry());
     mySettings::writeSettings("System/WindowState/Main", saveState());
-    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
+    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
     delete ui;
     proc->kill();
 }
@@ -224,7 +224,7 @@ void MainWindow::timer()
 
 void MainWindow::addItemListWidget()
 {
-    QFile file(QApplication::applicationDirPath()+"/dnscrypt-proxy/log.txt");
+    QFile file(QApplication::applicationDirPath()+"/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
     file.open(QIODevice::ReadOnly);
     QString line;
     bool isFinish=false;
@@ -263,7 +263,7 @@ void MainWindow::dnsCrypt(QString arg)
 {
     procDnsCrypt.setNativeArguments(arg);
     procDnsCrypt.setReadChannel(QProcess::StandardOutput);
-    procDnsCrypt.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/dnscrypt-proxy.exe",QProcess::ReadOnly);
+    procDnsCrypt.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/dnscrypt-proxy.exe",QProcess::ReadOnly);
     ui->listWidget->addItem(procDnsCrypt.readAllStandardOutput());
     procDnsCrypt.waitForFinished(1500);
 }
@@ -274,7 +274,7 @@ void MainWindow::procStart()
     proc->setArguments(prepareParameters(ui->comboParametre->isEnabled()));
     //ui->debugArea->appendPlainText("[*] " + ui->comboParametre->currentText());
     //ui->debugArea->appendPlainText("Exe Path: " + QDir::currentPath() + "/goodbyedpi/goodbyedpi.exe");
-    proc->start(QApplication::applicationDirPath()+"/goodbyedpi/goodbyedpi.exe", QProcess::ReadOnly);
+    proc->start(QApplication::applicationDirPath()+"/goodbyedpi/"+QSysInfo::currentCpuArchitecture()+"/goodbyedpi.exe", QProcess::ReadOnly);
     proc->waitForStarted(1000);
 
     if(!settings->value("System/disableNotifications").toBool())
@@ -283,6 +283,7 @@ void MainWindow::procStart()
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         trayIcon->showMessage("GoodByeDPI GUI", tr("Başlatıldı."), icon, 1000);
     }
+    setWindowIcon(QIcon(":/images/images/icon.ico"));
     trayIcon->setIcon(QIcon(":/images/images/icon.ico"));
     changeDns("127.0.0.1");
     //dnsCrypt(" -service install");
@@ -302,11 +303,12 @@ void MainWindow::procStop()
         trayIcon->showMessage("GoodByeDPI GUI", tr("Durduruldu."), icon, 1000);
     }
     trayIcon->setIcon(QIcon(":/images/images/stopped_icon.ico"));
+    setWindowIcon(QIcon(":/images/images/stopped_icon.ico"));
     //    dnsCrypt(" -service stop");
     //    dnsCrypt(" -service uninstall");
     procDnsCrypt.close();
     changeDns("");
-    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/log.txt");
+    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
     ui->listWidget->scrollToBottom();
 }
 

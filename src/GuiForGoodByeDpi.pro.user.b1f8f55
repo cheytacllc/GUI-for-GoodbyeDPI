@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.7.1, 2018-10-14T22:48:21. -->
+<!-- Written by QtCreator 4.7.1, 2018-10-11T18:07:01. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{911740b1-cc6e-4920-a714-8494c6aa250f}</value>
+  <value type="QByteArray">{b1f8f559-9c9d-4263-bfa6-4186fbf04454}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -242,13 +242,13 @@
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.MakeStep</value>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MakeStep.AutomaticallyAddedMakeArguments"/>
       <value type="bool" key="Qt4ProjectManager.MakeStep.Clean">false</value>
-      <value type="QString" key="Qt4ProjectManager.MakeStep.MakeArguments">-install</value>
+      <value type="QString" key="Qt4ProjectManager.MakeStep.MakeArguments">install</value>
       <value type="QString" key="Qt4ProjectManager.MakeStep.MakeCommand"></value>
      </valuemap>
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.1">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">%{CurrentRun:Executable:NativePath}</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.Command">%{Qt:QT_INSTALL_BINS}/windeployqt</value>
+      <value type="QString" key="ProjectExplorer.ProcessStep.Command">C:/Qt/Qt5.11.1/5.11.1/msvc2015/bin/windeployqt.exe</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.WorkingDirectory">%{buildDir}</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Custom Process Step</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
