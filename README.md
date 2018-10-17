@@ -21,6 +21,8 @@ Başlangıçta özel bir ayar yapmanıza gerek yoktur. **Başlat** butonuna tık
 
 > **İpucu: Ayarlar > Özel Parametre Kullan > Hızlı Ayarlar > [-3] -p -r -s -e 40 (better speed for HTTP and HTTPS)** seçeneğini kullandığınızda engel kalkıyorsa muhtemelen bağlantı hızınız daha iyi olacaktır.
 
+> **Not:** ISPniz **Turknet** ise açamadığınız siteler varsa tarayıcınızda HTTPS zorlaması yapan **HTTPS Everywhere** gibi bir eklenti kullanarak sorundan kurtulabilirsiniz.
+
 ~~Windows DNS adresini kendiniz değiştirmeniz gerekmektedir. Aksi halde kuvvetle muhtemel engellenmiş sitelere erişim sağlayamayacaksınız.~~ **Artık DNS adresini otomatik değiştiriyor**
 
 ## Kaynak Koddan Derleme
