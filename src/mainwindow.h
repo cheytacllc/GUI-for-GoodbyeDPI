@@ -40,7 +40,7 @@ protected:
 
 public slots:
     void addItemListWidget();
-    void changeDns(QString dns);
+    void changeDns(int dns);
     void dnsCrypt(QString arg);
     void procStart();
     void procStop();
