@@ -124,7 +124,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     }
 
     connect(proc, &QProcess::errorOccurred, this, &MainWindow::catchError);
-    changeDns(0);
+    changeDns("dhcp.bat");
     timer();
 }
 
@@ -133,7 +133,7 @@ MainWindow::~MainWindow()
     //dnsCrypt(" -service stop");
     //dnsCrypt(" -service uninstall");
     procDnsCrypt.close();
-    changeDns(0);
+    changeDns("dhcp.bat");
     mySettings::writeSettings("System/Geometry/Main", saveGeometry());
     mySettings::writeSettings("System/WindowState/Main", saveState());
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
@@ -175,7 +175,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
             //dnsCrypt(" -service stop");
             //dnsCrypt(" -service uninstall");
             procDnsCrypt.close();
-            changeDns(0);
+            changeDns("dhcp.bat");
             ayarlar->close();
             hakkinda.close();
             event->accept();
@@ -206,7 +206,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
             //dnsCrypt(" -service stop");
             //dnsCrypt(" -service uninstall");
             procDnsCrypt.close();
-            changeDns(0);
+            changeDns("dhcp.bat");
             ayarlar->close();
             hakkinda.close();
             event->accept();
@@ -251,27 +251,12 @@ void MainWindow::addItemListWidget()
 }
 
 
-void MainWindow::changeDns(int dns)
+void MainWindow::changeDns(QString dns)
 {
-    switch (dns) {
-    case 0:
-    {
         QProcess dhcp;
-        dhcp.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/dhcp.exe",QProcess::ReadOnly);
+        dhcp.setNativeArguments("start /min "+QApplication::applicationDirPath()+"/dnscrypt-proxy/"+dns);
+        dhcp.start("cmd.exe /c ",QProcess::ReadOnly);
         dhcp.waitForFinished(1000);
-        break;
-    }
-
-    case 1:
-    {
-        QProcess localhost;
-        localhost.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/localhost.exe",QProcess::ReadOnly);
-        localhost.waitForFinished(1000);
-        break;
-    }
-
-    }
-
 }
 
 void MainWindow::dnsCrypt(QString arg)
@@ -300,7 +285,7 @@ void MainWindow::procStart()
     }
     setWindowIcon(QIcon(":/images/images/icon.ico"));
     trayIcon->setIcon(QIcon(":/images/images/icon.ico"));
-    changeDns(1);
+    changeDns("localhost.bat");
     //dnsCrypt(" -service install");
     dnsCrypt(" -logfile=log.txt");
 
@@ -322,7 +307,7 @@ void MainWindow::procStop()
     //    dnsCrypt(" -service stop");
     //    dnsCrypt(" -service uninstall");
     procDnsCrypt.close();
-    changeDns(0);
+    changeDns("dhcp.bat");
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
     ui->listWidget->scrollToBottom();
 }
