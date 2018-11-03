@@ -4,7 +4,7 @@
 
 > İndirme Bağlantısı (Artık 32 ve 64 bit ayrımı yok!)
 >
->[32 ve 64 Bit için İndir!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.0.9/GoodByeDPI_GUI.zip)
+>[32 ve 64 Bit için İndir!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.10/GoodByeDPI_GUI.zip)
 >
 
 
@@ -39,6 +39,6 @@ Qt Creator'ı başlattıktan sonra File - Open File tıklayıp **.pro** uzantıl
 |Özellik| İyileştirme |
 |--| --|
 | Çalışma Saatleri Ayarlama (Tamamlandı) |Parametre Sisteminin Yeniden Kodlanması|
-| Güncelleme Yöneticisi  |Daha İyi Hata Tespiti|
+| Güncelleme Yöneticisi (Kısmen Eklendi)  |Daha İyi Hata Tespiti|
 | Sistem DNS'i Değiştirebilme(Tamamlandı)|Arayüzde Yapılacak Değişiklikler |
 | DnsCrypt(Tamamlandı)|  |
