@@ -427,8 +427,15 @@ void MainWindow::checkUpdate()
     connect(response, SIGNAL(finished()), &event, SLOT(quit()));
     event.exec();
     content = response->readAll();
-    if(content.trimmed()!=QApplication::applicationVersion())
+    if(content.trimmed()!=QApplication::applicationVersion()&&content.trimmed()!="")
         ui->actionUpdate->setVisible(true);
+    else
+    {
+        QTimer *updtimer = new QTimer(this);
+        updtimer->start(60000);
+        connect(updtimer, SIGNAL(timeout()), this, SLOT(checkUpdate()));
+    }
+        //QTimer::singleShot(60000, this, SLOT(checkUpdate()));
         //QMessageBox::information(this,"New version found","<body><html><a href='https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/"+content.trimmed()+"/GoodByeDPI_GUI.zip'>Click here to download new version</a></body></html>");
 
 }
