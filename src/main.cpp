@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
     }
 
     MainWindow w(a.arguments());
-    qApp->setApplicationVersion("1.0.9");
 
     QStringList argList = a.arguments();
     QString argument = argList.join(",");

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml
+QT       += core gui network
 CONFIG   += c++17
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -30,11 +30,13 @@ win32-msvc* {
     RC_ICONS = images/icon.ico
     CONFIG += embed_manifest_exe
     QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:level=\'requireAdministrator\'
+    win32:RC_FILE = guiforgoodbyedpi.rc
+
 }
 
-win32-g++ {
-    RC_FILE = guiforgoodbyedpi.rc
-}
+
+
+
 
 SOURCES += \
         main.cpp \
@@ -47,7 +49,8 @@ HEADERS += \
     settings.h \
     about.h \
     mysettings.h \
-    mymessagebox.h
+    mymessagebox.h \
+    version.h
 
 FORMS += \
         mainwindow.ui \

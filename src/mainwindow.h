@@ -20,6 +20,7 @@
 #include <QTimer>
 #include <QSysInfo>
 
+
 namespace Ui {
 class MainWindow;
 }
@@ -33,6 +34,7 @@ public:
     QProcess procDnsCrypt;
     QTimer *logtimer;
     qint64 seeklog=0;
+    QString content;
     ~MainWindow();
 
 protected:
@@ -52,7 +54,7 @@ public slots:
     void RestoreWindowTrigger(QSystemTrayIcon::ActivationReason RW);
     void onActionAyarlar();
     void onActionAbout();
-
+    void checkUpdate();
     void onDefaultParamCheckState(Qt::CheckState state);
 
     QStringList prepareParameters(bool isComboParametreEnabled);
@@ -61,6 +63,9 @@ public slots:
 
 signals:
 
+
+private slots:
+    void on_actionUpdate_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -77,6 +82,7 @@ private:
     QAction *startAction;
     QAction *stopAction;
     QAction *settingsAction;
+    QAction *updateAction;
 
     QProcess *proc;
 

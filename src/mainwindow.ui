@@ -129,6 +129,7 @@
    </attribute>
    <addaction name="actionAyarlar"/>
    <addaction name="actionAbout"/>
+   <addaction name="actionUpdate"/>
   </widget>
   <action name="actionAyarlar">
    <property name="icon">
@@ -153,6 +154,19 @@
    </property>
    <property name="toolTip">
     <string>Hakkında</string>
+   </property>
+  </action>
+  <action name="actionUpdate">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/images/images/download-2-icon.png</normaloff>
+     <normalon>:/images/images/info-button.png</normalon>:/images/images/download-2-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Yeni sürüm bulundu!</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
  </widget>

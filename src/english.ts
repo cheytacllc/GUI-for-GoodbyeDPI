@@ -55,6 +55,10 @@
         <translation>About</translation>
     </message>
     <message>
+        <source>Yeni sürüm bulundu!</source>
+        <translation>New update found!</translation>
+    </message>
+    <message>
         <source>Arka planda çalışıyor.</source>
         <translation>Working in background.</translation>
     </message>
@@ -198,6 +202,10 @@
     <message>
         <source>Bildirimleri Kapat</source>
         <translation>Disable Notifications</translation>
+    </message>
+    <message>
+        <source>Otomatik Güncelleme Kontrolü</source>
+        <translation>Auto Check Updates</translation>
     </message>
     <message>
         <source>Başlangıç</source>

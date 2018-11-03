@@ -86,6 +86,8 @@ private slots:
 
     void on_checkBox_7_toggled(bool checked);
 
+    void on_checkBox_upd_toggled(bool checked);
+
 private:
     Ui::Settings *ui;
     QSettings *ayarR;

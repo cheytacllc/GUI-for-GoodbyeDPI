@@ -3,10 +3,6 @@
 #include "mysettings.h"
 #include <QDebug>
 #include <QProcess>
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomNodeList>
-#include <QtXml/QDomElement>
-
 
 Settings::Settings(QWidget *parent) :
     QWidget(parent),
@@ -576,6 +572,7 @@ void Settings::resetSettings()
     ayarR->setValue("systemStartup", false);
     ayarR->setValue("systemSchedule", false);
     ayarR->setValue("disableNotifications", false);
+    ayarR->setValue("UpdateCheck", true);
     ayarR->endGroup();
 }
 
@@ -832,51 +829,17 @@ void Settings::loadSettings()
         ui->checkDnsv6Port->setChecked(false);
     }
 
-    if(ayarR->value("Parametre/paramBlacklist").toBool())
-    {
-        ui->checkBlacklist->setChecked(true);
-    }
-    else
-    {
-        ui->checkBlacklist->setChecked(false);
-    }
+        ui->checkBlacklist->setChecked(ayarR->value("Parametre/paramBlacklist").toBool());
 
-    if(ayarR->value("System/systemStartup").toBool())
-    {
-        ui->startupBox->setChecked(true);
-    }
-    else
-    {
-        ui->startupBox->setChecked(false);
-    }
+        ui->startupBox->setChecked(ayarR->value("System/systemStartup").toBool());
 
-    if(ayarR->value("System/systemTray").toBool())
-    {
-        ui->trayBox->setChecked(true);
-    }
-    else
-    {
-        ui->trayBox->setChecked(false);
-    }
+        ui->trayBox->setChecked(ayarR->value("System/systemTray").toBool());
 
-    if(ayarR->value("System/disableNotifications").toBool())
-    {
-        ui->notificationBox->setChecked(true);
-    }
-    else
-    {
-        ui->notificationBox->setChecked(false);
-    }
-    if(ayarR->value("System/systemSchedule").toBool())
-    {
-        ui->scheduleBox->setChecked(true);
-    }
-    else
-    {
-        ui->scheduleBox->setChecked(false);
-    }
+        ui->notificationBox->setChecked(ayarR->value("System/disableNotifications").toBool());
 
+        ui->scheduleBox->setChecked(ayarR->value("System/systemSchedule").toBool());
 
+    ui->checkBox_upd->setChecked(ayarR->value("System/UpdateCheck").toBool());
 
 
     ui->checkBox_1->setChecked(ayarR->value("System/D1/Enabled").toBool());
@@ -973,3 +936,7 @@ void Settings::on_checkBox_7_toggled(bool checked)
 
 }
 
+void Settings::on_checkBox_upd_toggled(bool checked)
+{
+    ayarR->setValue("System/UpdateCheck",checked);
+}

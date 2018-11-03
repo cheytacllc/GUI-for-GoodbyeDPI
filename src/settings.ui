@@ -41,7 +41,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="paramTab">
       <attribute name="title">
@@ -1282,8 +1282,8 @@
         <rect>
          <x>9</x>
          <y>9</y>
-         <width>306</width>
-         <height>73</height>
+         <width>340</width>
+         <height>78</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_39">
@@ -1321,6 +1321,13 @@
            <widget class="QCheckBox" name="notificationBox">
             <property name="text">
              <string>Bildirimleri Kapat</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_upd">
+            <property name="text">
+             <string>Otomatik Güncelleme Kontrolü</string>
             </property>
            </widget>
           </item>

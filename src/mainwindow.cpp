@@ -8,6 +8,15 @@
 #include <QDirIterator>
 #include <QListIterator>
 #include <memory>
+#include <QUrl>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
+#include <QSslConfiguration>
+#include <QDesktopServices>
+
+
+
 
 MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     QMainWindow(parent),
@@ -21,21 +30,23 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     startAction(new QAction(QIcon(":/images/images/play-button.png"), tr("Başlat"), this)),
     stopAction(new QAction(QIcon(":/images/images/stop-button.png"), tr("Durdur"), this)),
     settingsAction(new QAction(QIcon(":/images/images/256-256-setings-configuration.png"), tr("Ayarlar"), this)),
+    updateAction(new QAction(QIcon(":/images/images/download-2-icon.png"), tr("Yeni sürüm bulundu!"), this)),
     tmpDir(new QTemporaryDir()),
     proc(new QProcess(this)),
     ui(new Ui::MainWindow)
 {
 
     ui->setupUi(this);
+    QApplication::setApplicationVersion("1.10");
     restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
     mySettings::setTheme(mySettings::loadTheme());
-    setWindowTitle("GoodByeDPI GUI 1.0.9");
+    setWindowTitle("GoodByeDPI GUI "+QApplication::applicationVersion());
     setWindowIcon(QIcon(":/images/images/icon.ico"));
     trayIcon->setIcon(QIcon(":/images/images/stopped_icon.ico"));
     setWindowIcon(QIcon(":/images/images/stopped_icon.ico"));
-    trayIcon->setToolTip("GoodByeDPI GUI 1.0.9");
+    trayIcon->setToolTip("GoodByeDPI GUI "+QApplication::applicationVersion());
     trayIcon->setVisible(true);
     trayIcon->show();
     ui->labelParameters->setWordWrap(true);
@@ -126,6 +137,12 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     connect(proc, &QProcess::errorOccurred, this, &MainWindow::catchError);
     changeDns("dhcp.bat");
     timer();
+    ui->actionUpdate->setVisible(false);
+    if(settings->value("System/UpdateCheck",true).toBool())
+    {
+         QTimer::singleShot(500, this, SLOT(checkUpdate()));
+    }
+
 }
 
 MainWindow::~MainWindow()
@@ -136,7 +153,6 @@ MainWindow::~MainWindow()
     changeDns("dhcp.bat");
     mySettings::writeSettings("System/Geometry/Main", saveGeometry());
     mySettings::writeSettings("System/WindowState/Main", saveState());
-    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
     delete ui;
     proc->kill();
 }
@@ -224,48 +240,35 @@ void MainWindow::timer()
 
 void MainWindow::addItemListWidget()
 {
-    QFile file(QApplication::applicationDirPath()+"/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
-    file.open(QIODevice::ReadOnly);
-    QString line;
-    bool isFinish=false;
-    QTextStream stream(&file);
-    while (!stream.atEnd())
+    if(procDnsCrypt.canReadLine())
     {
-        stream.seek(seeklog);
-        line = stream.readLine();
-        if(line.contains("live servers", Qt::CaseInsensitive))
-            isFinish=true;
-        if(line!="")
-            ui->listWidget_2->addItem(line);
+        ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readLine()).trimmed());
         ui->listWidget_2->scrollToBottom();
-        seeklog=stream.pos();
+        if(QString::fromLocal8Bit(procDnsCrypt.readLine()).contains("live servers", Qt::CaseInsensitive))
+        {
+            logtimer->stop();
+            ui->listWidget_2->addItem("\n");
+        }
     }
-    if(isFinish)
-    {
-        logtimer->stop();
-        ui->listWidget_2->item(ui->listWidget_2->count()-2)->setSelected(true);
-        ui->listWidget_2->addItem("");
-        seeklog=0;
-    }
-        file.close();
 }
 
 
 void MainWindow::changeDns(QString dns)
 {
-        QProcess dhcp;
-        dhcp.setNativeArguments("start /min "+QApplication::applicationDirPath()+"/dnscrypt-proxy/"+dns);
-        dhcp.start("cmd.exe /c ",QProcess::ReadOnly);
-        dhcp.waitForFinished(1000);
+        QProcess procDns;
+        procDns.setNativeArguments("start /min "+QApplication::applicationDirPath()+"/dnscrypt-proxy/"+dns);
+        procDns.start("cmd.exe /c ",QProcess::ReadOnly);
+        procDns.waitForFinished(2000);
+        procDns.close();
 }
 
 void MainWindow::dnsCrypt(QString arg)
 {
     procDnsCrypt.setNativeArguments(arg);
-    procDnsCrypt.setReadChannel(QProcess::StandardOutput);
+    procDnsCrypt.setReadChannelMode(QProcess::MergedChannels);
     procDnsCrypt.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/dnscrypt-proxy.exe",QProcess::ReadOnly);
-    ui->listWidget->addItem(procDnsCrypt.readAllStandardOutput());
-    procDnsCrypt.waitForFinished(1500);
+    procDnsCrypt.waitForReadyRead();
+
 }
 
 
@@ -287,7 +290,9 @@ void MainWindow::procStart()
     trayIcon->setIcon(QIcon(":/images/images/icon.ico"));
     changeDns("localhost.bat");
     //dnsCrypt(" -service install");
-    dnsCrypt(" -logfile=log.txt");
+    dnsCrypt("");
+    //dnsCrypt(" -logfile=log.txt");
+
 
 
 }
@@ -308,7 +313,6 @@ void MainWindow::procStop()
     //    dnsCrypt(" -service uninstall");
     procDnsCrypt.close();
     changeDns("dhcp.bat");
-    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
     ui->listWidget->scrollToBottom();
 }
 
@@ -342,7 +346,7 @@ void MainWindow::processOutput()
     ui->listWidget->scrollToBottom();
 
     logtimer = new QTimer(this);
-    logtimer->start(1500);
+    logtimer->start(500);
     connect(logtimer, SIGNAL(timeout()), this, SLOT(addItemListWidget()));
 
 }
@@ -405,10 +409,30 @@ void MainWindow::onActionAyarlar()
 
 }
 
+
 void MainWindow::onActionAbout()
 {
     hakkinda.exec();
 }
+
+void MainWindow::checkUpdate()
+{
+    QString url = "https://cheytacllc.github.io/GUI-for-GoodbyeDPI/version.html";
+    QNetworkAccessManager manager;
+    QNetworkRequest request;
+    request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
+    request.setUrl(QUrl(url));
+    QNetworkReply *response = manager.get(request);
+    QEventLoop event;
+    connect(response, SIGNAL(finished()), &event, SLOT(quit()));
+    event.exec();
+    content = response->readAll();
+    if(content.trimmed()!=QApplication::applicationVersion())
+        ui->actionUpdate->setVisible(true);
+        //QMessageBox::information(this,"New version found","<body><html><a href='https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/"+content.trimmed()+"/GoodByeDPI_GUI.zip'>Click here to download new version</a></body></html>");
+
+}
+
 
 void MainWindow::onDefaultParamCheckState(Qt::CheckState state)
 {
@@ -537,4 +561,10 @@ void MainWindow::catchError(QProcess::ProcessError err)
 {
     ui->listWidget->addItem(proc->errorString());
     ui->listWidget->scrollToBottom();
+}
+
+
+void MainWindow::on_actionUpdate_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/"+content.trimmed()+"/GoodByeDPI_GUI.zip"));
 }
