@@ -1,11 +1,11 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION             1,10,1
-#define VER_FILEVERSION_STR         "1.10.1"
+#define VER_FILEVERSION             1,10,2
+#define VER_FILEVERSION_STR         "1.10.2"
 
-#define VER_PRODUCTVERSION          1,10,1
-#define VER_PRODUCTVERSION_STR      "1.10.1"
+#define VER_PRODUCTVERSION          1,10,2
+#define VER_PRODUCTVERSION_STR      "1.10.2"
 
 #define VER_COMPANYNAME_STR         "HexOpenSource and m231"
 #define VER_FILEDESCRIPTION_STR     "Anti Censorship Application"
