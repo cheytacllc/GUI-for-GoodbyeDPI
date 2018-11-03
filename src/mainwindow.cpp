@@ -37,7 +37,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 {
 
     ui->setupUi(this);
-    QApplication::setApplicationVersion("1.10.2");
+    QApplication::setApplicationVersion("1.1.2");
     restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
@@ -438,7 +438,7 @@ void MainWindow::checkUpdate()
     connect(response, SIGNAL(finished()), &event, SLOT(quit()));
     event.exec();
     content = response->readAll();
-    if(content.trimmed().remove('.').toInt()>QApplication::applicationVersion().remove('.').toInt()&&content.trimmed()!="")
+    if(content.trimmed()!=QApplication::applicationVersion()&&content.trimmed()!="")
         ui->actionUpdate->setVisible(true);
     else
     {
