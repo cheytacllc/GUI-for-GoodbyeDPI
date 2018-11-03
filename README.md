@@ -4,7 +4,7 @@
 
 > İndirme Bağlantısı (Artık 32 ve 64 bit ayrımı yok!)
 >
->[32 ve 64 Bit için İndir!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.10/GoodByeDPI_GUI.zip)
+>[32 ve 64 Bit için İndir!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.1.0/GoodByeDPI_GUI.zip)
 >
 
 
