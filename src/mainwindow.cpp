@@ -37,7 +37,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 {
 
     ui->setupUi(this);
-    QApplication::setApplicationVersion("1.1.2");
+    QApplication::setApplicationVersion("1.1.3");
     restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
@@ -269,8 +269,8 @@ void MainWindow::changeDns(QString dns)
         QProcess procDns;
         procDns.setNativeArguments("start /min "+QApplication::applicationDirPath()+"/dnscrypt-proxy/"+dns);
         procDns.start("cmd.exe /c ",QProcess::ReadOnly);
-        procDns.waitForFinished(2000);
-        procDns.close();
+        //procDns.waitForFinished(2000);
+        //procDns.close();
 }
 
 void MainWindow::dnsCrypt(QString arg)
@@ -322,6 +322,10 @@ void MainWindow::procStop()
     setWindowIcon(QIcon(":/images/images/stopped_icon.ico"));
     //    dnsCrypt(" -service stop");
     //    dnsCrypt(" -service uninstall");
+    QProcess stopWinDivert;
+    //stopWinDivert.setNativeArguments("sc stop windivert1.3");
+    stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
+    stopWinDivert.waitForFinished(500);
     procDnsCrypt.close();
     changeDns("dhcp.bat");
     ui->listWidget->scrollToBottom();
