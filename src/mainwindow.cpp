@@ -149,6 +149,9 @@ MainWindow::~MainWindow()
 {
     //dnsCrypt(" -service stop");
     //dnsCrypt(" -service uninstall");
+    QProcess stopWinDivert;
+    //stopWinDivert.setNativeArguments("sc stop windivert1.3");
+    stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
     procDnsCrypt.close();
     changeDns("dhcp.bat");
     mySettings::writeSettings("System/Geometry/Main", saveGeometry());
@@ -190,6 +193,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
         {
             //dnsCrypt(" -service stop");
             //dnsCrypt(" -service uninstall");
+            QProcess stopWinDivert;
+            //stopWinDivert.setNativeArguments("sc stop windivert1.3");
+            stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
             procDnsCrypt.close();
             changeDns("dhcp.bat");
             ayarlar->close();
@@ -221,6 +227,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
             settings->setValue("System/systemTray",false);
             //dnsCrypt(" -service stop");
             //dnsCrypt(" -service uninstall");
+            QProcess stopWinDivert;
+            //stopWinDivert.setNativeArguments("sc stop windivert1.3");
+            stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
             procDnsCrypt.close();
             changeDns("dhcp.bat");
             ayarlar->close();
