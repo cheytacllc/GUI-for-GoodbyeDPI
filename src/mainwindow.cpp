@@ -278,7 +278,7 @@ void MainWindow::changeDns(QString dns)
         QProcess procDns;
         procDns.setNativeArguments("start /min "+QApplication::applicationDirPath()+"/dnscrypt-proxy/"+dns);
         procDns.start("cmd.exe /c ",QProcess::ReadOnly);
-        //procDns.waitForFinished(2000);
+        procDns.waitForFinished(500);
         //procDns.close();
 }
 
