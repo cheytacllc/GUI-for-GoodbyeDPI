@@ -37,7 +37,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 {
 
     ui->setupUi(this);
-    QApplication::setApplicationVersion("1.1.3");
+    QApplication::setApplicationVersion("1.1.4");
     restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
@@ -135,7 +135,14 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     }
 
     connect(proc, &QProcess::errorOccurred, this, &MainWindow::catchError);
-    changeDns("dhcp.bat");
+    if(settings->value("System/dnsMethod", "Registry").toString()=="Registry")
+    {
+        changeDns("", 0);
+    }
+    else
+    {
+       changeDns("dhcp.bat", 1);
+    }
     timer();
     ui->actionUpdate->setVisible(false);
     if(settings->value("System/UpdateCheck",true).toBool())
@@ -153,7 +160,14 @@ MainWindow::~MainWindow()
     //stopWinDivert.setNativeArguments("sc stop windivert1.3");
     stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
     procDnsCrypt.close();
-    changeDns("dhcp.bat");
+    if(settings->value("System/dnsMethod", "Registry").toString()=="Registry")
+    {
+        changeDns("", 0);
+    }
+    else
+    {
+       changeDns("dhcp.bat", 1);
+    }
     mySettings::writeSettings("System/Geometry/Main", saveGeometry());
     mySettings::writeSettings("System/WindowState/Main", saveState());
     delete ui;
@@ -197,7 +211,14 @@ void MainWindow::closeEvent(QCloseEvent *event)
             //stopWinDivert.setNativeArguments("sc stop windivert1.3");
             stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
             procDnsCrypt.close();
-            changeDns("dhcp.bat");
+            if(settings->value("System/dnsMethod", "Registry").toString()=="Registry")
+            {
+                changeDns("", 0);
+            }
+            else
+            {
+               changeDns("dhcp.bat", 1);
+            }
             ayarlar->close();
             hakkinda.close();
             event->accept();
@@ -231,7 +252,14 @@ void MainWindow::closeEvent(QCloseEvent *event)
             //stopWinDivert.setNativeArguments("sc stop windivert1.3");
             stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
             procDnsCrypt.close();
-            changeDns("dhcp.bat");
+            if(settings->value("System/dnsMethod", "Registry").toString()=="Registry")
+            {
+                changeDns("", 0);
+            }
+            else
+            {
+               changeDns("dhcp.bat", 1);
+            }
             ayarlar->close();
             hakkinda.close();
             event->accept();
@@ -273,13 +301,39 @@ void MainWindow::addItemListWidget()
 }
 
 
-void MainWindow::changeDns(QString dns)
+void MainWindow::changeDns(QString dns, int control)
 {
+    switch (control) {
+    case 0:
+    {
+        for(int i=0; i<10; i++)
+        {
+            QSettings findAdapter("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\NetworkCards\\"+QString::number(i),QSettings::NativeFormat);
+            if(!findAdapter.value("ServiceName").toString().isEmpty())
+            {
+                QSettings dnsReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\"+findAdapter.value("ServiceName").toString().toLower(),QSettings::NativeFormat);
+                if(!dnsReg.value("DhcpDefaultGateway").toString().isEmpty())
+                    dnsReg.setValue("NameServer",dns);
+            }
+
+        }
+        QProcess ipconfig;
+        ipconfig.start("ipconfig /registerdns",QProcess::ReadOnly);
+        ipconfig.waitForFinished(500);
+        break;
+    }
+    case 1:
+    {
         QProcess procDns;
         procDns.setNativeArguments("start /min "+QApplication::applicationDirPath()+"/dnscrypt-proxy/"+dns);
         procDns.start("cmd.exe /c ",QProcess::ReadOnly);
         procDns.waitForFinished(500);
-        //procDns.close();
+            //procDns.close();
+        break;
+    }
+    default:
+        break;
+    }
 }
 
 void MainWindow::dnsCrypt(QString arg)
@@ -308,7 +362,17 @@ void MainWindow::procStart()
     }
     setWindowIcon(QIcon(":/images/images/icon.ico"));
     trayIcon->setIcon(QIcon(":/images/images/icon.ico"));
-    changeDns("localhost.bat");
+
+    if(settings->value("System/dnsMethod", "Registry").toString()=="Registry")
+    {
+        changeDns("127.0.0.1", 0);
+    }
+    else
+    {
+       changeDns("localhost.bat", 1);
+    }
+
+
     //dnsCrypt(" -service install");
     dnsCrypt("");
     //dnsCrypt(" -logfile=log.txt");
@@ -336,7 +400,14 @@ void MainWindow::procStop()
     stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
     stopWinDivert.waitForFinished(500);
     procDnsCrypt.close();
-    changeDns("dhcp.bat");
+    if(settings->value("System/dnsMethod", "Registry").toString()=="Registry")
+    {
+        changeDns("", 0);
+    }
+    else
+    {
+       changeDns("dhcp.bat", 1);
+    }
     ui->listWidget->scrollToBottom();
 }
 

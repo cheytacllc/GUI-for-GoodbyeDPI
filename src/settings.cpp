@@ -573,6 +573,7 @@ void Settings::resetSettings()
     ayarR->setValue("systemSchedule", false);
     ayarR->setValue("disableNotifications", false);
     ayarR->setValue("UpdateCheck", true);
+    ayarR->setValue("System/dnsMethod","Registry");
     ayarR->endGroup();
 }
 
@@ -840,6 +841,7 @@ void Settings::loadSettings()
         ui->scheduleBox->setChecked(ayarR->value("System/systemSchedule").toBool());
 
     ui->checkBox_upd->setChecked(ayarR->value("System/UpdateCheck").toBool());
+    ui->comboBox_2->setCurrentText(ayarR->value("System/dnsMethod","Registry").toString());
 
 
     ui->checkBox_1->setChecked(ayarR->value("System/D1/Enabled").toBool());
@@ -939,4 +941,9 @@ void Settings::on_checkBox_7_toggled(bool checked)
 void Settings::on_checkBox_upd_toggled(bool checked)
 {
     ayarR->setValue("System/UpdateCheck",checked);
+}
+
+void Settings::on_comboBox_2_currentTextChanged(const QString &arg1)
+{
+    ayarR->setValue("System/dnsMethod",arg1);
 }

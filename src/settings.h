@@ -88,6 +88,8 @@ private slots:
 
     void on_checkBox_upd_toggled(bool checked);
 
+    void on_comboBox_2_currentTextChanged(const QString &arg1);
+
 private:
     Ui::Settings *ui;
     QSettings *ayarR;
