@@ -56,6 +56,7 @@ public slots:
     void onActionAbout();
     void checkUpdate();
     void onDefaultParamCheckState(Qt::CheckState state);
+    void taskKill(QString arg);
 
     QStringList prepareParameters(bool isComboParametreEnabled);
 

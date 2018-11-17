@@ -3,6 +3,8 @@
 #include "mysettings.h"
 #include <QDebug>
 #include <QProcess>
+#include <QFile>
+#include <QTextStream>
 
 Settings::Settings(QWidget *parent) :
     QWidget(parent),
@@ -234,28 +236,53 @@ void Settings::schtasks(QString arg)
     QProcess startupTask;
     startupTask.setNativeArguments(arg);
     startupTask.start("cmd.exe /c %SYSTEMROOT%\\system32\\schtasks.exe");
-    startupTask.waitForFinished(1000);
+    startupTask.waitForFinished(500);
 }
 
 
 void Settings::onCheckedStartup()
 {
-
+    QSettings startup("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
     if(ui->startupBox->checkState()==Qt::Checked)
     {
         QString appPath = QCoreApplication::applicationFilePath();
         appPath.replace("/", "\\");
-
+        //schtasks(" /CREATE /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC STARTUP");
         schtasks(" /CREATE /RU BUILTIN\\Users /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC ONLOGON /F");
-        schtasks(" /CHANGE /V1 /TN "+QApplication::applicationName()+" /F");
+//        schtasks(" /CHANGE /V1 /TN "+QApplication::applicationName()+" /F");
 //        schtasks(" /CHANGE /RU BUILTIN\\Users /TN "+QApplication::applicationName()+" /F");
 //        schtasks(" /CHANGE /TR "+appPath+"\"-silent\" /TN "+QApplication::applicationName()+" /F");
 //        ui->startupBox->setToolTip(appPath);
+//        startup.setValue("GuiForGoodByeDPI","%SYSTEMROOT%\\system32\\schtasks.exe /Run /TN "+QApplication::applicationName());
+
+        schtasks(" /Query /XML /TN "+QApplication::applicationName()+" > "+QCoreApplication::applicationDirPath()+"/task.xml");
+
+        QFile file("task.xml");
+        QFile outfile("new_task.xml");
+        if(file.open(QIODevice::ReadOnly)&&outfile.open(QIODevice::WriteOnly))
+        {
+            QTextStream in(&file);
+            QTextStream out(&outfile);
+            while (!in.atEnd()) {
+            QString line = in.readLine();
+            QString outline = line.replace(QString("<DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>"), QString("<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>"));
+            out << outline << "\n";
+            }
+            outfile.close();
+            file.close();
+            file.remove();
+        }
+
+        schtasks(" /create /tn "+QApplication::applicationName()+" /xml new_task.xml /F");
+
         ayarR->setValue("System/systemStartup", true);
+
+        outfile.remove();
     }
     else
     {
         schtasks(" /DELETE /TN "+QApplication::applicationName()+" /F");
+
         ayarR->setValue("System/systemStartup", false);
     }
 }

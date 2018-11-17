@@ -37,7 +37,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 {
 
     ui->setupUi(this);
-    QApplication::setApplicationVersion("1.1.4");
+    QApplication::setApplicationVersion("1.1.5");
     restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
@@ -154,20 +154,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    //dnsCrypt(" -service stop");
-    //dnsCrypt(" -service uninstall");
-    QProcess stopWinDivert;
-    //stopWinDivert.setNativeArguments("sc stop windivert1.3");
-    stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
-    procDnsCrypt.close();
-    if(settings->value("System/dnsMethod", "Registry").toString()=="Registry")
-    {
-        changeDns("", 0);
-    }
-    else
-    {
-       changeDns("dhcp.bat", 1);
-    }
+    procStop();
     mySettings::writeSettings("System/Geometry/Main", saveGeometry());
     mySettings::writeSettings("System/WindowState/Main", saveState());
     delete ui;
@@ -205,20 +192,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         }
         else
         {
-            //dnsCrypt(" -service stop");
-            //dnsCrypt(" -service uninstall");
-            QProcess stopWinDivert;
-            //stopWinDivert.setNativeArguments("sc stop windivert1.3");
-            stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
-            procDnsCrypt.close();
-            if(settings->value("System/dnsMethod", "Registry").toString()=="Registry")
-            {
-                changeDns("", 0);
-            }
-            else
-            {
-               changeDns("dhcp.bat", 1);
-            }
+            procStop();
             ayarlar->close();
             hakkinda.close();
             event->accept();
@@ -246,20 +220,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         else
         {
             settings->setValue("System/systemTray",false);
-            //dnsCrypt(" -service stop");
-            //dnsCrypt(" -service uninstall");
-            QProcess stopWinDivert;
-            //stopWinDivert.setNativeArguments("sc stop windivert1.3");
-            stopWinDivert.start("sc stop windivert1.3", QProcess::ReadOnly);
-            procDnsCrypt.close();
-            if(settings->value("System/dnsMethod", "Registry").toString()=="Registry")
-            {
-                changeDns("", 0);
-            }
-            else
-            {
-               changeDns("dhcp.bat", 1);
-            }
+            procStop();
             ayarlar->close();
             hakkinda.close();
             event->accept();
@@ -280,24 +241,27 @@ void MainWindow::addItemListWidget()
     if(procDnsCrypt.canReadLine())
     {
         ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readLine()).trimmed());
+        //ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readAll()).trimmed());
         ui->listWidget_2->scrollToBottom();
+/*
         if(QString::fromLocal8Bit(procDnsCrypt.readLine()).contains("live servers", Qt::CaseInsensitive))
         {
+            ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readLine()).trimmed());
             logtimer->stop();
-            ui->listWidget_2->addItem("\n");
+            ui->listWidget_2->addItem(" ");
         }
+*/
         if(QString::fromLocal8Bit(procDnsCrypt.readLine()).contains("FATAL", Qt::CaseInsensitive))
         {
-            QProcess killDns;
-            killDns.start("TASKKILL /F /IM dnscrypt-proxy.exe");
-            killDns.waitForFinished(500);
-            killDns.start("TASKKILL /F /IM goodbyedpi.exe");
-            killDns.waitForFinished(500);
+            taskKill("dnscrypt-proxy.exe");
+            taskKill("goodbyedpi.exe");
             logtimer->stop();
             procStop();
             procStart();
         }
     }
+    if(ui->listWidget_2->item(ui->listWidget_2->count()-1)->text().contains("live servers", Qt::CaseInsensitive))
+        logtimer->stop();
 }
 
 
@@ -306,12 +270,12 @@ void MainWindow::changeDns(QString dns, int control)
     switch (control) {
     case 0:
     {
-        for(int i=0; i<10; i++)
+        for(int i=0; i<100; i++)
         {
-            QSettings findAdapter("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\NetworkCards\\"+QString::number(i),QSettings::NativeFormat);
-            if(!findAdapter.value("ServiceName").toString().isEmpty())
+            QSettings findAdapter("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\NetworkCards",QSettings::NativeFormat);
+            if(!findAdapter.value(QString::number(i)+"/ServiceName").toString().isEmpty())
             {
-                QSettings dnsReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\"+findAdapter.value("ServiceName").toString().toLower(),QSettings::NativeFormat);
+                QSettings dnsReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\"+findAdapter.value(QString::number(i)+"/ServiceName").toString().toLower(),QSettings::NativeFormat);
                 if(!dnsReg.value("DhcpDefaultGateway").toString().isEmpty())
                     dnsReg.setValue("NameServer",dns);
             }
@@ -439,9 +403,8 @@ void MainWindow::processOutput()
         ui->listWidget->addItem(output);
     }
     ui->listWidget->scrollToBottom();
-
     logtimer = new QTimer(this);
-    logtimer->start(500);
+    logtimer->start(100);
     connect(logtimer, SIGNAL(timeout()), this, SLOT(addItemListWidget()));
 
 }
@@ -523,7 +486,15 @@ void MainWindow::checkUpdate()
     event.exec();
     content = response->readAll();
     if(content.trimmed()!=QApplication::applicationVersion()&&content.trimmed()!="")
+    {
         ui->actionUpdate->setVisible(true);
+        if(!settings->value("System/disableNotifications").toBool())
+        {
+            qDebug() << "Message will shown";
+            QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
+            trayIcon->showMessage("GoodByeDPI GUI", tr("Yeni sürüm bulundu!"), icon, 1000);
+        }
+    }
     else
     {
         QTimer::singleShot(60000, this, SLOT(checkUpdate()));
@@ -547,6 +518,13 @@ void MainWindow::onDefaultParamCheckState(Qt::CheckState state)
         prepareParameters(false);
     }
 
+}
+
+void MainWindow::taskKill(QString arg)
+{
+    QProcess killDns;
+    killDns.start("TASKKILL /F /IM "+arg); //dnscrypt-proxy.exe
+    killDns.waitForFinished(500); //goodbyedpi.exe
 }
 
 QStringList MainWindow::prepareParameters(bool isComboParametreEnabled)
