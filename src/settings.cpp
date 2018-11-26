@@ -237,6 +237,7 @@ void Settings::schtasks(QString arg)
     startupTask.setNativeArguments(arg);
     startupTask.start("cmd.exe /c %SYSTEMROOT%\\system32\\schtasks.exe");
     startupTask.waitForFinished(500);
+//    startupTask.close();
 }
 
 
@@ -247,14 +248,10 @@ void Settings::onCheckedStartup()
     {
         QString appPath = QCoreApplication::applicationFilePath();
         appPath.replace("/", "\\");
-        //schtasks(" /CREATE /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC STARTUP");
-        schtasks(" /CREATE /RU BUILTIN\\Users /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC ONLOGON /F");
-//        schtasks(" /CHANGE /V1 /TN "+QApplication::applicationName()+" /F");
-//        schtasks(" /CHANGE /RU BUILTIN\\Users /TN "+QApplication::applicationName()+" /F");
-//        schtasks(" /CHANGE /TR "+appPath+"\"-silent\" /TN "+QApplication::applicationName()+" /F");
-//        ui->startupBox->setToolTip(appPath);
-//        startup.setValue("GuiForGoodByeDPI","%SYSTEMROOT%\\system32\\schtasks.exe /Run /TN "+QApplication::applicationName());
+      //  schtasks(" /CREATE /RU BUILTIN\\Users /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC ONLOGON /F");
 
+        schtasks(" /CREATE /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC ONCE /ST "+QTime::currentTime().toString("hh:mm")+" /F");
+/*
         schtasks(" /Query /XML /TN "+QApplication::applicationName()+" > "+QCoreApplication::applicationDirPath()+"/task.xml");
 
         QFile file("task.xml");
@@ -263,10 +260,12 @@ void Settings::onCheckedStartup()
         {
             QTextStream in(&file);
             QTextStream out(&outfile);
-            while (!in.atEnd()) {
-            QString line = in.readLine();
-            QString outline = line.replace(QString("<DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>"), QString("<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>"));
-            out << outline << "\n";
+
+            while (!in.atEnd())
+            {
+                QString line = in.readLine();
+                QString outline = line.replace(QString("<DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>"), QString("<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>"));
+                out << outline << "\n";
             }
             outfile.close();
             file.close();
@@ -275,14 +274,15 @@ void Settings::onCheckedStartup()
 
         schtasks(" /create /tn "+QApplication::applicationName()+" /xml new_task.xml /F");
 
-        ayarR->setValue("System/systemStartup", true);
-
         outfile.remove();
+        */
+        startup.setValue(QApplication::applicationName(),"schtasks /run /tn "+QApplication::applicationName());
+        ayarR->setValue("System/systemStartup", true);
     }
     else
     {
         schtasks(" /DELETE /TN "+QApplication::applicationName()+" /F");
-
+        startup.remove(QApplication::applicationName());
         ayarR->setValue("System/systemStartup", false);
     }
 }
@@ -627,13 +627,13 @@ void Settings::loadSettings()
 
     if(ayarR->value("Parametre/customParam").toBool())
     {
-         ui->checkCustomParam->setChecked(true);
-         ui->paramBox->setEnabled(true);
-         if(ayarR->value("Parametre/quickSettings").toBool())
-         {
-             ui->checkQuickSettings->setEnabled(true);
-             ui->param1->setEnabled(false);
-         }
+        ui->checkCustomParam->setChecked(true);
+        ui->paramBox->setEnabled(true);
+        if(ayarR->value("Parametre/quickSettings").toBool())
+        {
+            ui->checkQuickSettings->setEnabled(true);
+            ui->param1->setEnabled(false);
+        }
     }
     else
     {
@@ -857,15 +857,15 @@ void Settings::loadSettings()
         ui->checkDnsv6Port->setChecked(false);
     }
 
-        ui->checkBlacklist->setChecked(ayarR->value("Parametre/paramBlacklist").toBool());
+    ui->checkBlacklist->setChecked(ayarR->value("Parametre/paramBlacklist").toBool());
 
-        ui->startupBox->setChecked(ayarR->value("System/systemStartup").toBool());
+    ui->startupBox->setChecked(ayarR->value("System/systemStartup").toBool());
 
-        ui->trayBox->setChecked(ayarR->value("System/systemTray").toBool());
+    ui->trayBox->setChecked(ayarR->value("System/systemTray").toBool());
 
-        ui->notificationBox->setChecked(ayarR->value("System/disableNotifications").toBool());
+    ui->notificationBox->setChecked(ayarR->value("System/disableNotifications").toBool());
 
-        ui->scheduleBox->setChecked(ayarR->value("System/systemSchedule").toBool());
+    ui->scheduleBox->setChecked(ayarR->value("System/systemSchedule").toBool());
 
     ui->checkBox_upd->setChecked(ayarR->value("System/UpdateCheck").toBool());
     ui->comboBox_2->setCurrentText(ayarR->value("System/dnsMethod","Registry").toString());

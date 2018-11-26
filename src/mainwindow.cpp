@@ -37,7 +37,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 {
 
     ui->setupUi(this);
-    QApplication::setApplicationVersion("1.1.5");
+    QApplication::setApplicationVersion("1.1.6");
     restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
@@ -149,7 +149,8 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     {
          QTimer::singleShot(500, this, SLOT(checkUpdate()));
     }
-
+    taskKill("dnscrypt-proxy.exe");
+    taskKill("goodbyedpi.exe");
 }
 
 MainWindow::~MainWindow()
@@ -250,7 +251,7 @@ void MainWindow::addItemListWidget()
             logtimer->stop();
             ui->listWidget_2->addItem(" ");
         }
-*/
+
         if(QString::fromLocal8Bit(procDnsCrypt.readLine()).contains("FATAL", Qt::CaseInsensitive))
         {
             taskKill("dnscrypt-proxy.exe");
@@ -259,6 +260,7 @@ void MainWindow::addItemListWidget()
             procStop();
             procStart();
         }
+        */
     }
     if(ui->listWidget_2->item(ui->listWidget_2->count()-1)->text().contains("live servers", Qt::CaseInsensitive))
         logtimer->stop();
@@ -284,6 +286,7 @@ void MainWindow::changeDns(QString dns, int control)
         QProcess ipconfig;
         ipconfig.start("ipconfig /registerdns",QProcess::ReadOnly);
         ipconfig.waitForFinished(500);
+//        ipconfig.close();
         break;
     }
     case 1:
@@ -292,7 +295,7 @@ void MainWindow::changeDns(QString dns, int control)
         procDns.setNativeArguments("start /min "+QApplication::applicationDirPath()+"/dnscrypt-proxy/"+dns);
         procDns.start("cmd.exe /c ",QProcess::ReadOnly);
         procDns.waitForFinished(500);
-            //procDns.close();
+//        procDns.close();
         break;
     }
     default:
@@ -336,13 +339,7 @@ void MainWindow::procStart()
        changeDns("localhost.bat", 1);
     }
 
-
-    //dnsCrypt(" -service install");
     dnsCrypt("");
-    //dnsCrypt(" -logfile=log.txt");
-
-
-
 }
 
 void MainWindow::procStop()
@@ -525,6 +522,7 @@ void MainWindow::taskKill(QString arg)
     QProcess killDns;
     killDns.start("TASKKILL /F /IM "+arg); //dnscrypt-proxy.exe
     killDns.waitForFinished(500); //goodbyedpi.exe
+    killDns.close();
 }
 
 QStringList MainWindow::prepareParameters(bool isComboParametreEnabled)
