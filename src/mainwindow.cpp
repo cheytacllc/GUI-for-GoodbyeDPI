@@ -37,7 +37,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 {
 
     ui->setupUi(this);
-    QApplication::setApplicationVersion("1.1.6");
+    QApplication::setApplicationVersion("1.1.7");
     restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
     QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
@@ -141,13 +141,13 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     }
     else
     {
-       changeDns("dhcp.bat", 1);
+        changeDns("dhcp.bat", 1);
     }
     timer();
     ui->actionUpdate->setVisible(false);
     if(settings->value("System/UpdateCheck",true).toBool())
     {
-         QTimer::singleShot(500, this, SLOT(checkUpdate()));
+        QTimer::singleShot(500, this, SLOT(checkUpdate()));
     }
     taskKill("dnscrypt-proxy.exe");
     taskKill("goodbyedpi.exe");
@@ -244,7 +244,7 @@ void MainWindow::addItemListWidget()
         ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readLine()).trimmed());
         //ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readAll()).trimmed());
         ui->listWidget_2->scrollToBottom();
-/*
+        /*
         if(QString::fromLocal8Bit(procDnsCrypt.readLine()).contains("live servers", Qt::CaseInsensitive))
         {
             ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readLine()).trimmed());
@@ -284,9 +284,11 @@ void MainWindow::changeDns(QString dns, int control)
 
         }
         QProcess ipconfig;
+        ipconfig.start("ipconfig /flushdns",QProcess::ReadOnly);
+        ipconfig.waitForFinished(500);
         ipconfig.start("ipconfig /registerdns",QProcess::ReadOnly);
         ipconfig.waitForFinished(500);
-//        ipconfig.close();
+        //        ipconfig.close();
         break;
     }
     case 1:
@@ -295,7 +297,7 @@ void MainWindow::changeDns(QString dns, int control)
         procDns.setNativeArguments("start /min "+QApplication::applicationDirPath()+"/dnscrypt-proxy/"+dns);
         procDns.start("cmd.exe /c ",QProcess::ReadOnly);
         procDns.waitForFinished(500);
-//        procDns.close();
+        //        procDns.close();
         break;
     }
     default:
@@ -336,7 +338,7 @@ void MainWindow::procStart()
     }
     else
     {
-       changeDns("localhost.bat", 1);
+        changeDns("localhost.bat", 1);
     }
 
     dnsCrypt("");
@@ -367,7 +369,7 @@ void MainWindow::procStop()
     }
     else
     {
-       changeDns("dhcp.bat", 1);
+        changeDns("dhcp.bat", 1);
     }
     ui->listWidget->scrollToBottom();
 }
@@ -496,8 +498,8 @@ void MainWindow::checkUpdate()
     {
         QTimer::singleShot(60000, this, SLOT(checkUpdate()));
     }
-        //QTimer::singleShot(60000, this, SLOT(checkUpdate()));
-        //QMessageBox::information(this,"New version found","<body><html><a href='https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/"+content.trimmed()+"/GoodByeDPI_GUI.zip'>Click here to download new version</a></body></html>");
+    //QTimer::singleShot(60000, this, SLOT(checkUpdate()));
+    //QMessageBox::information(this,"New version found","<body><html><a href='https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/"+content.trimmed()+"/GoodByeDPI_GUI.zip'>Click here to download new version</a></body></html>");
 
 }
 
@@ -642,5 +644,9 @@ void MainWindow::catchError(QProcess::ProcessError err)
 
 void MainWindow::on_actionUpdate_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/"+content.trimmed()+"/GoodByeDPI_GUI.zip"));
+    QProcess::startDetached("\"Updater.exe");
+    procStop();
+    QApplication::quit();
+    //this->close();
+    //QDesktopServices::openUrl(QUrl("https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/"+content.trimmed()+"/GoodByeDPI_GUI.zip"));
 }

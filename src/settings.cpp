@@ -248,9 +248,9 @@ void Settings::onCheckedStartup()
     {
         QString appPath = QCoreApplication::applicationFilePath();
         appPath.replace("/", "\\");
-      //  schtasks(" /CREATE /RU BUILTIN\\Users /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC ONLOGON /F");
+        schtasks(" /CREATE /RU BUILTIN\\Users /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC ONLOGON /F");
 
-        schtasks(" /CREATE /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC ONCE /ST "+QTime::currentTime().toString("hh:mm")+" /F");
+        //schtasks(" /CREATE /TN "+QApplication::applicationName()+" /TR "+appPath+"\" -silent\" /RL HIGHEST /SC ONCE /ST "+QTime::currentTime().toString("hh:mm")+" /F");
 /*
         schtasks(" /Query /XML /TN "+QApplication::applicationName()+" > "+QCoreApplication::applicationDirPath()+"/task.xml");
 
@@ -275,14 +275,15 @@ void Settings::onCheckedStartup()
         schtasks(" /create /tn "+QApplication::applicationName()+" /xml new_task.xml /F");
 
         outfile.remove();
-        */
+
         startup.setValue(QApplication::applicationName(),"schtasks /run /tn "+QApplication::applicationName());
+        */
         ayarR->setValue("System/systemStartup", true);
     }
     else
     {
         schtasks(" /DELETE /TN "+QApplication::applicationName()+" /F");
-        startup.remove(QApplication::applicationName());
+        //startup.remove(QApplication::applicationName());
         ayarR->setValue("System/systemStartup", false);
     }
 }

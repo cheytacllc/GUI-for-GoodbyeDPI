@@ -18,7 +18,6 @@ TEMPLATE = app
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
-
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
@@ -42,7 +41,23 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     settings.cpp \
-    about.cpp
+    about.cpp \
+    about.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    settings.cpp \
+    about.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    settings.cpp \
+    about.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    settings.cpp \
+    about.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    settings.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -50,15 +65,44 @@ HEADERS += \
     about.h \
     mysettings.h \
     mymessagebox.h \
+    version.h \
+    about.h \
+    mainwindow.h \
+    mymessagebox.h \
+    mysettings.h \
+    resource.h \
+    settings.h \
+    version.h \
+    about.h \
+    mainwindow.h \
+    mymessagebox.h \
+    mysettings.h \
+    resource.h \
+    settings.h \
+    version.h \
+    about.h \
+    mainwindow.h \
+    mymessagebox.h \
+    mysettings.h \
+    resource.h \
+    settings.h \
+    version.h \
+    about.h \
+    mainwindow.h \
+    mymessagebox.h \
+    mysettings.h \
+    resource.h \
+    settings.h \
     version.h
 
 FORMS += \
         mainwindow.ui \
     settings.ui \
-    about.ui
+    about.ui \
 
 RESOURCES += \
-    res.qrc
+    res.qrc \
 
 TRANSLATIONS += \
     english.qm
+
