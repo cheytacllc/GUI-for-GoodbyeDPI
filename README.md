@@ -35,10 +35,13 @@ Qt Creator'ı başlattıktan sonra File - Open File tıklayıp **.pro** uzantıl
 
 > [Google Docs](https://docs.google.com/document/d/1LMGmFVu17NKItqTpJKGKXMhX58xWcCJPezddCo73e7c/edit?usp=sharing)
 
+## Bağış (Support)
+>[Patreon](https://www.patreon.com/cheytacllc)
+
 ## İleriki Sürümlerde Eklenmesi Planlanan/Beklenen Özellikler
 |Özellik| İyileştirme |
 |--| --|
 | Çalışma Saatleri Ayarlama (Tamamlandı) |Parametre Sisteminin Yeniden Kodlanması|
-| Güncelleme Yöneticisi (Kısmen Eklendi)  |Daha İyi Hata Tespiti|
+| Güncelleme Yöneticisi (Eklendi)  |Daha İyi Hata Tespiti|
 | Sistem DNS'i Değiştirebilme(Tamamlandı)|Arayüzde Yapılacak Değişiklikler |
 | DnsCrypt(Tamamlandı)|  |
