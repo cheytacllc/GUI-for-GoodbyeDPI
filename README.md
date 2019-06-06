@@ -25,8 +25,7 @@ You don't need to make a custom setting at startup. Click on the **start** butto
 
 > **Note:** If your ISP is **Turknet** and you cannot open some sites you can use plugin like **HTTPS Ewerywhere** in your browser for get rid of that problem.
 
-~~You must change the windows dns address yourself. otherwise you will not be able to access blocked sites.
-~~ **Now changing the dns address automatically**
+~~You must change the windows dns address yourself. otherwise you will not be able to access blocked sites.~~ **Now changing the dns address automatically**
 
 ## Compilation from source code
 
@@ -50,8 +49,7 @@ After starting qt creator, select file > open file select the file extension is 
 | Auto change system's DNS(completed)|Better UI |
 | DnsCrypt(completed)|  |
 
-////////////////////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\////////////////////////////////////////////////////////////////////////
+
 
 # GoodByeDPI GUI ve dnscrypt
 
