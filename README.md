@@ -1,4 +1,4 @@
-# GoodByeDPI GUI ve dnscrypt
+# GoodByeDPI GUI and dnscrypt
 
 This application is user interface of [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI) anti-censorship application for ease of use and adding some features.
 
