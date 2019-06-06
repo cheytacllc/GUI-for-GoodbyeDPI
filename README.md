@@ -1,5 +1,60 @@
 # GoodByeDPI GUI ve dnscrypt
 
+This application is user interface of [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI) anti-censorship application for ease of use and adding some features.
+
+> Download
+>
+>[Download!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.1.7/GoodByeDPI_GUI.zip)
+>
+
+
+# Usage
+
+**Don't remove the application in directories that have spaces in the name, it will give an error when you run the application.**
+You need to **close the settings window** and hit start button so that the parameters can be saved. You can check whether the application works correctly from **log section** on the home screen, feel free to let me know when you have any problems.
+
+> To use the program you need to install the VC++ 2015 x86 package. If you wish, you can install **vc_redist.x86.exe** in the directory of the program or download it from the link below.
+
+>
+> Link: [Visual C++ 2015](https://www.microsoft.com/tr-TR/download/details.aspx?id=52685)
+
+You don't need to make a custom setting at startup. Click on the **start** button and enjoy the uncensored internet. Custom settings can be optionally edited. The optimal settings is set to **default**.
+
+
+> **Tip: Settings > Use Custom Parameters > Quick Settings > [-3] -p -r -s -e 40 (better speed for HTTP and HTTPS)** If you use the option, the connection will be better if the obstacle is removed.
+
+> **Note:** If your ISP is **Turknet** and you cannot open some sites you can use plugin like **HTTPS Ewerywhere** in your browser for get rid of that problem.
+
+~~You must change the windows dns address yourself. otherwise you will not be able to access blocked sites.
+~~ **Now changing the dns address automatically**
+
+## Compilation from source code
+
+The software has been compiled with the versions of msvc-2017 (64bit version) and mingw-5.3.0 and msvc2015 (32bit version) **test**. it is not necessary to use these compilers only. When installing with qt framework online installer, do not forget to mark **for installation of MSVC and mingw compilers**.
+
+After starting qt creator, select file > open file select the file extension is **.pro**. After clicking the configure button on the next screen, you can compile the software by clicking on the build button. then you can automatically copy the qt libraries that are necessary for the software to work with the windeployqt application in the debug or release directory.
+
+
+## Compilation of GUI For GoodbyeDPI
+
+> [Google Docs (Not translated yet)](https://docs.google.com/document/d/1LMGmFVu17NKItqTpJKGKXMhX58xWcCJPezddCo73e7c/edit?usp=sharing)
+
+## Donate (Support)
+>[Patreon](https://www.patreon.com/cheytacllc)
+
+## New features/fixes planning/expecting for future releases
+|Feature| Fix |
+|--| --|
+| Schedule start/stop times (completed) |Reimplementation of Parameter System|
+| Updated (completed)  |Better error handling|
+| Auto change system's DNS(completed)|Better UI |
+| DnsCrypt(completed)|  |
+
+////////////////////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\////////////////////////////////////////////////////////////////////////
+
+# GoodByeDPI GUI ve dnscrypt
+
 [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI) isimli anti sansür uygulaması için kullanıcı arayüzü ile kolay kullanım sağlar.
 
 > İndirme Bağlantısı (Artık 32 ve 64 bit ayrımı yok!)
