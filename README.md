@@ -49,6 +49,9 @@ After starting qt creator, select file > open file select the file extension is 
 | Auto change system's DNS(completed)|Better UI |
 | DnsCrypt(completed)|  |
 
+## Kudos
+Thanks to @ValdikSS for [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI). This is core of the program.
+Thanks to @jedisct1 for [dnscrypt-proxy](https://github.com/jedisct1/dnscrypt-proxy). This makes use of secure DNSCrypt servers.
 
 
 # GoodByeDPI GUI ve dnscrypt
