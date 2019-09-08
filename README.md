@@ -15,7 +15,7 @@ This application is user interface of [GoodByeDPI](https://github.com/ValdikSS/G
 **Don't remove the application in directories that have spaces in the name, it will give an error when you run the application.**
 You need to **close the settings window** and hit start button so that the parameters can be saved. You can check whether the application works correctly from **log section** on the home screen, feel free to let me know when you have any problems.
 
-> To use the program you need to install the VC++ 2015 x86 package. If you wish, you can install **vc_redist.x86.exe** in the directory of the program or download it from the link below.
+> To use the program you need to install the VC++ 2017 x86 package. If you wish, you can install **vc_redist.x86.exe** in the directory of the program or download it from the link below.
 
 >
 > Link: [Visual C++ 2017](https://go.microsoft.com/fwlink/?LinkId=746571)
@@ -71,7 +71,7 @@ Thanks to @jedisct1 for [dnscrypt-proxy](https://github.com/jedisct1/dnscrypt-pr
 **Uygulamayı adında boşluk olan dizinlere çıkarmayın, çalıştırdığınızda hata verecektir**
 Parametrelerin tam olarak kayıt edilebilmesi için Ayarlar penceresini **kapatıp** çalıştırmanız gerekli. Sonraki güncellemede eklenecek. Ana ekrandaki **Log** bölümünden uygulamanın düzgün çalışıp çalışmadığını kontrol edebilirsiniz, herhangi bir problem yaşadığınızda bildirmekten çekinmeyin.
 
-> Programı kullanmak için VC++ 2015 x86 paketini yüklemeniz gerekmektedir. Dilerseniz programın dizinindeki **vc_redist.x86.exe** kurabilir ya da alttaki linkten indirebilirsiniz.
+> Programı kullanmak için VC++ 2017 x86 paketini yüklemeniz gerekmektedir. Dilerseniz programın dizinindeki **vc_redist.x86.exe** kurabilir ya da alttaki linkten indirebilirsiniz.
 >
 > Link: [Visual C++ 2017](https://go.microsoft.com/fwlink/?LinkId=746571)
 
