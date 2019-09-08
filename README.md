@@ -1,4 +1,4 @@
-[English](README.md#3)  [Türkçe](README.md#59)
+[English](#3)  [Türkçe](#59)
 
 # GoodByeDPI GUI and dnscrypt
 
