@@ -1,5 +1,6 @@
-[English](#3)  [Türkçe](#59)
+[English](#eng)  [Türkçe](#tur)
 
+#eng
 # GoodByeDPI GUI and dnscrypt
 
 This application is user interface of [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI) anti-censorship application for ease of use and adding some features.
@@ -55,7 +56,7 @@ After starting qt creator, select file > open file select the file extension is 
 Thanks to @ValdikSS for [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI). This is core of the program.
 Thanks to @jedisct1 for [dnscrypt-proxy](https://github.com/jedisct1/dnscrypt-proxy). This makes use of secure DNSCrypt servers.
 
-
+#tur
 # GoodByeDPI GUI ve dnscrypt
 
 [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI) isimli anti sansür uygulaması için kullanıcı arayüzü ile kolay kullanım sağlar.
