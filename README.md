@@ -1,10 +1,12 @@
+[English](README.md#3)  [Türkçe](README.md#59)
+
 # GoodByeDPI GUI and dnscrypt
 
 This application is user interface of [GoodByeDPI](https://github.com/ValdikSS/GoodbyeDPI) anti-censorship application for ease of use and adding some features.
 
 > Download
 >
->[Download!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.1.7/GoodByeDPI_GUI.zip)
+>[Download!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.1.9/GoodByeDPI_GUI.zip)
 >
 
 
@@ -16,7 +18,7 @@ You need to **close the settings window** and hit start button so that the param
 > To use the program you need to install the VC++ 2015 x86 package. If you wish, you can install **vc_redist.x86.exe** in the directory of the program or download it from the link below.
 
 >
-> Link: [Visual C++ 2015](https://www.microsoft.com/tr-TR/download/details.aspx?id=52685)
+> Link: [Visual C++ 2017](https://go.microsoft.com/fwlink/?LinkId=746571)
 
 You don't need to make a custom setting at startup. Click on the **start** button and enjoy the uncensored internet. Custom settings can be optionally edited. The optimal settings is set to **default**.
 
@@ -60,7 +62,7 @@ Thanks to @jedisct1 for [dnscrypt-proxy](https://github.com/jedisct1/dnscrypt-pr
 
 > İndirme Bağlantısı (Artık 32 ve 64 bit ayrımı yok!)
 >
->[32 ve 64 Bit için İndir!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.1.7/GoodByeDPI_GUI.zip)
+>[32 ve 64 Bit için İndir!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.1.9/GoodByeDPI_GUI.zip)
 >
 
 
@@ -71,7 +73,7 @@ Parametrelerin tam olarak kayıt edilebilmesi için Ayarlar penceresini **kapat�
 
 > Programı kullanmak için VC++ 2015 x86 paketini yüklemeniz gerekmektedir. Dilerseniz programın dizinindeki **vc_redist.x86.exe** kurabilir ya da alttaki linkten indirebilirsiniz.
 >
-> Link: [Visual C++ 2015](https://www.microsoft.com/tr-TR/download/details.aspx?id=52685)
+> Link: [Visual C++ 2017](https://go.microsoft.com/fwlink/?LinkId=746571)
 
 Başlangıçta özel bir ayar yapmanıza gerek yoktur. **Başlat** butonuna tıklayıp sansürsüz internetin keyfini çıkarabilirsiniz. Özel Ayarlar isteğe bağlı şekilde düzenlenebilir. İlk açılışta en uygun ayar **Ön Tanımlı** olarak ayarlanmıştır. 
 
