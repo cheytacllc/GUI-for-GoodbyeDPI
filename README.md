@@ -1,4 +1,4 @@
-[English](#eng)  [Türkçe](#tur)
+[English](#goodbyedpi-gui-and-dnscrypt)  [Türkçe](#goodbyedpi-gui-ve-dnscrypt)
 
 # GoodByeDPI GUI and dnscrypt
 
