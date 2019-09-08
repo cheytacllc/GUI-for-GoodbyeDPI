@@ -37,10 +37,9 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 {
 
     ui->setupUi(this);
-    QApplication::setApplicationVersion("1.1.8");
+    QApplication::setApplicationVersion("1.1.9");
     restoreGeometry(mySettings::readSettings("System/Geometry/Main").toByteArray());
     restoreState(mySettings::readSettings("System/WindowState/Main").toByteArray());
-    QFile::remove(QApplication::applicationDirPath() + "/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/log.txt");
     mySettings::setTheme(mySettings::loadTheme());
     setWindowTitle("GoodByeDPI GUI "+QApplication::applicationVersion());
     setWindowIcon(QIcon(":/images/images/icon.ico"));
@@ -50,7 +49,7 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     trayIcon->setVisible(true);
     trayIcon->show();
     ui->labelParameters->setWordWrap(true);
-
+    mySettings::writeSettings("Dir",QApplication::applicationDirPath());
     //For using lambda functions with traymenu
     auto& traymn = trayMenu;
 
@@ -96,6 +95,12 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
     {
         ui->comboParametre->setEnabled(false);
     }
+
+    if(settings->value("Version").toString().isEmpty())
+    {
+        settings->setValue("Version",QApplication::applicationVersion());
+    }
+
 
     //Capturing state of default parameters checkbox for enable/disable parameters combo box.
     connect(ayarlar, &Settings::defaultParamStateChanged, this, &MainWindow::onDefaultParamCheckState, Qt::QueuedConnection);
@@ -155,7 +160,8 @@ MainWindow::MainWindow(QStringList arguments, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    procStop();
+    if(proc->state()==QProcess::Running)
+        procStop();
     mySettings::writeSettings("System/Geometry/Main", saveGeometry());
     mySettings::writeSettings("System/WindowState/Main", saveState());
     delete ui;
@@ -165,13 +171,13 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     event->ignore();
-    MyMessageBox msgBox;
-    QPushButton *tray=msgBox.addButton(tr("Sistem Tepsisine Küçült"),QMessageBox::ActionRole);
-    QPushButton *close=msgBox.addButton(tr("Kapat"),QMessageBox::ActionRole);
+    MyMessageBox *msgBox=new MyMessageBox();
+    QPushButton *tray=msgBox->addButton(tr("Sistem Tepsisine Küçült"),QMessageBox::ActionRole);
+    QPushButton *close=msgBox->addButton(tr("Kapat"),QMessageBox::ActionRole);
     QCheckBox *dontAsk = new QCheckBox(tr("Tekrar sorma"),this);
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.setText(tr("Programdan çıkmak ya da sistem tepsisine küçültmek mi istiyorsunuz?"));
-    msgBox.setCheckBox(dontAsk);
+    msgBox->setIcon(QMessageBox::Information);
+    msgBox->setText(tr("Programdan çıkmak ya da sistem tepsisine küçültmek mi istiyorsunuz?"));
+    msgBox->setCheckBox(dontAsk);
     if(settings->value("System/dontAsk").isNull())
         settings->setValue("System/dontAsk",false);
     if(settings->value("System/dontAsk").toBool())
@@ -193,7 +199,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
         }
         else
         {
-            procStop();
+            if(proc->state()==QProcess::Running)
+                procStop();
             ayarlar->close();
             hakkinda.close();
             event->accept();
@@ -201,10 +208,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     else
     {
-        msgBox.exec();
+        msgBox->exec();
         if(dontAsk->isChecked())
             settings->setValue("System/dontAsk",true);
-        if(msgBox.clickedButton()==tray)
+        if(msgBox->clickedButton()==tray)
         {
             settings->setValue("System/systemTray",true);
             this->hide();
@@ -221,7 +228,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
         else
         {
             settings->setValue("System/systemTray",false);
-            procStop();
+            if(proc->state()==QProcess::Running)
+                procStop();
             ayarlar->close();
             hakkinda.close();
             event->accept();
@@ -239,20 +247,29 @@ void MainWindow::timer()
 
 void MainWindow::addItemListWidget()
 {
-    if(procDnsCrypt.canReadLine())
-    {
-        ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readLine()).trimmed());
+    int count=0;
+    QString line;
+        //ui->listWidget_2->addItem(QString(procDnsCrypt.readAll()));
         //ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readAll()).trimmed());
         ui->listWidget_2->scrollToBottom();
-        /*
-        if(QString::fromLocal8Bit(procDnsCrypt.readLine()).contains("live servers", Qt::CaseInsensitive))
+        line=QString::fromLocal8Bit(procDnsCrypt.readLine()).trimmed();
+
+        if(line.length()>10&&count<1) //.contains("live servers", Qt::CaseInsensitive)
         {
-            ui->listWidget_2->addItem(QString::fromLocal8Bit(procDnsCrypt.readLine()).trimmed());
+            ui->listWidget_2->addItem(line);
+            //
+        }
+        else if(count>=30)
+        {
             logtimer->stop();
-            ui->listWidget_2->addItem(" ");
+            //ui->listWidget_2->addItem(" ");
+        }
+        else
+        {
+            count++;
         }
 
-        if(QString::fromLocal8Bit(procDnsCrypt.readLine()).contains("FATAL", Qt::CaseInsensitive))
+        if(line.contains("FATAL", Qt::CaseInsensitive))
         {
             taskKill("dnscrypt-proxy.exe");
             taskKill("goodbyedpi.exe");
@@ -260,10 +277,9 @@ void MainWindow::addItemListWidget()
             procStop();
             procStart();
         }
-        */
-    }
-    if(ui->listWidget_2->item(ui->listWidget_2->count()-1)->text().contains("live servers", Qt::CaseInsensitive))
-        logtimer->stop();
+
+    //if(ui->listWidget_2->item(ui->listWidget_2->count()-1)->text().contains("live servers", Qt::CaseInsensitive))
+    //    logtimer->stop();
 }
 
 
@@ -308,9 +324,10 @@ void MainWindow::changeDns(QString dns, int control)
 void MainWindow::dnsCrypt(QString arg)
 {
     procDnsCrypt.setNativeArguments(arg);
-    procDnsCrypt.setReadChannelMode(QProcess::MergedChannels);
+    procDnsCrypt.setProcessChannelMode(QProcess::MergedChannels);
     procDnsCrypt.start(QApplication::applicationDirPath()+"/dnscrypt-proxy/"+QSysInfo::currentCpuArchitecture()+"/dnscrypt-proxy.exe",QProcess::ReadOnly);
     procDnsCrypt.waitForReadyRead();
+    //connect(this,SIGNAL(procDnsCrypt.readyRead()),SLOT(addItemListWidget()));
 
 }
 
@@ -318,6 +335,7 @@ void MainWindow::dnsCrypt(QString arg)
 void MainWindow::procStart()
 {
     proc->setArguments(prepareParameters(ui->comboParametre->isEnabled()));
+    proc->setProcessChannelMode(QProcess::MergedChannels);
     //ui->debugArea->appendPlainText("[*] " + ui->comboParametre->currentText());
     //ui->debugArea->appendPlainText("Exe Path: " + QDir::currentPath() + "/goodbyedpi/goodbyedpi.exe");
     proc->start(QApplication::applicationDirPath()+"/goodbyedpi/"+QSysInfo::currentCpuArchitecture()+"/goodbyedpi.exe", QProcess::ReadOnly);
@@ -394,8 +412,9 @@ void MainWindow::checkTime()
 
 void MainWindow::processOutput()
 {
-    proc->setReadChannel(QProcess::StandardOutput);
-    QString output = proc->readAllStandardOutput();
+
+    //proc->setReadChannel(QProcess::StandardOutput);
+    QString output = proc->readAll();
 
     if(!output.isEmpty())
     {
@@ -487,11 +506,12 @@ void MainWindow::checkUpdate()
     if(content.trimmed()!=QApplication::applicationVersion()&&content.trimmed()!="")
     {
         ui->actionUpdate->setVisible(true);
+        ui->actionUpdate->setText(ui->actionUpdate->text()+" v"+content.trimmed());
         if(!settings->value("System/disableNotifications").toBool())
         {
             qDebug() << "Message will shown";
             QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
-            trayIcon->showMessage("GoodByeDPI GUI", tr("Yeni sürüm bulundu!"), icon, 1000);
+            trayIcon->showMessage("GoodByeDPI GUI", tr("Yeni sürüm bulundu!")+" v"+content.trimmed(), icon, 1000);
         }
     }
     else
