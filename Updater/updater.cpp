@@ -91,35 +91,53 @@ void Updater::downloadFile()
     event.exec();
     QString content = response->readAll();
 
-    url = QUrl("https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/"+content.trimmed()+"/GoodByeDPI_GUI.exe");
+    if(content.trimmed()!=mySettings::readSettings("Version").toString())
+    {
+        url = QUrl("https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/"+content.trimmed()+"/GoodByeDPI_GUI.exe");
 
-    QFileInfo fileInfo(url.path());
-    QString fileName = fileInfo.fileName();
-    if (fileName.isEmpty())
-        fileName = "index.html";
+        QFileInfo fileInfo(url.path());
+        QString fileName = fileInfo.fileName();
+        if (fileName.isEmpty())
+            fileName = "index.html";
 
-    if (QFile::exists(fileName)) {
-        QFile::remove("GoodByeDPI_GUI_old.exe");
-        QFile::rename("GoodByeDPI_GUI.exe","GoodByeDPI_GUI_old.exe");
+        if (QFile::exists(fileName)) {
+
+            //QFile::remove(mySettings::readSettings("Dir").toString()+"/GoodByeDPI_GUI_old.exe");
+            QFile::rename(mySettings::readSettings("Dir").toString()+"/GoodByeDPI_GUI.exe",mySettings::readSettings("Dir").toString()+"/GoodByeDPI_GUI_"+mySettings::readSettings("Version").toString()+".exe");
+        }
+
+        file = new QFile(mySettings::readSettings("Dir").toString()+'/'+fileName);
+        if (!file->open(QIODevice::WriteOnly)) {
+            QMessageBox::information(this, tr("HTTP"),
+                                     tr("Unable to save the file %1: %2.")
+                                         .arg(fileName).arg(file->errorString()));
+            delete file;
+            file = 0;
+            return;
+        }
+
+        //    progressDialog->setWindowTitle(tr("HTTP"));
+        //    progressDialog->setLabelText(tr("Downloading %1.").arg(fileName));
+        //    downloadButton->setEnabled(false);
+
+        // schedule the request
+        httpRequestAborted = false;
+        startRequest(url);
     }
 
-    file = new QFile(fileName);
-    if (!file->open(QIODevice::WriteOnly)) {
-        QMessageBox::information(this, tr("HTTP"),
-                                 tr("Unable to save the file %1: %2.")
-                                 .arg(fileName).arg(file->errorString()));
-        delete file;
-        file = 0;
-        return;
+    else if(content.trimmed()==mySettings::readSettings("Version").toString())
+    {
+        QMessageBox::information(this,"Information","You are using the last version");
+        QApplication::quit();
     }
 
-//    progressDialog->setWindowTitle(tr("HTTP"));
-//    progressDialog->setLabelText(tr("Downloading %1.").arg(fileName));
-//    downloadButton->setEnabled(false);
+    else
+    {
+        QMessageBox::critical(this,"Error","Network error");
+        QApplication::quit();
+    }
 
-    // schedule the request
-    httpRequestAborted = false;
-    startRequest(url);
+
 }
 
 void Updater::cancelDownload()
@@ -212,7 +230,13 @@ void Updater::returnApp()
 {
     if(ui->progressBar->value()==ui->progressBar->maximum()&&file->size()>0)
     {
-        QProcess::startDetached("\"GoodByeDPI_GUI.exe");
+        if(file->size()>2048)
+            QFile::rename(mySettings::readSettings("Dir").toString()+"/GoodByeDPI_GUI.exe",mySettings::readSettings("Dir").toString()+"/GoodByeDPI_GUI_sfx.exe");
+
+        if(QFile::exists("GoodByeDPI_GUI_sfx.exe"))
+            QProcess::startDetached(mySettings::readSettings("Dir").toString()+"/GoodByeDPI_GUI_sfx.exe");
+        else
+            QProcess::startDetached(mySettings::readSettings("Dir").toString()+"/GoodByeDPI_GUI.exe");
         this->close();
     }
 
