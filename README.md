@@ -6,7 +6,7 @@ This application is user interface of [GoodByeDPI](https://github.com/ValdikSS/G
 
 > Download
 >
->[Download!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.1.9/GoodByeDPI_GUI.zip)
+>[Download!](https://github.com/mguludag/GUI-for-GoodbyeDPI/releases/download/1.1.9/GoodByeDPI_GUI.zip)
 >
 
 
@@ -62,7 +62,7 @@ Thanks to @jedisct1 for [dnscrypt-proxy](https://github.com/jedisct1/dnscrypt-pr
 
 > İndirme Bağlantısı (Artık 32 ve 64 bit ayrımı yok!)
 >
->[32 ve 64 Bit için İndir!](https://github.com/cheytacllc/GUI-for-GoodbyeDPI/releases/download/1.1.9/GoodByeDPI_GUI.zip)
+>[32 ve 64 Bit için İndir!](https://github.com/mguludag/GUI-for-GoodbyeDPI/releases/download/1.1.9/GoodByeDPI_GUI.zip)
 >
 
 
