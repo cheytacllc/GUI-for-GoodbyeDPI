@@ -23,7 +23,7 @@ You need to **close the settings window** and hit start button so that the param
 You don't need to make a custom setting at startup. Click on the **start** button and enjoy the uncensored internet. Custom settings can be optionally edited. The optimal settings is set to **default**.
 
 
-> **Tip: Settings > Use Custom Parameters > Quick Settings > [-3] -p -r -s -e 40 (better speed for HTTP and HTTPS)** If you use the option, the connection will be better if the obstacle is removed.
+> **Tip: Settings > Use Custom Parameters > Quick Settings > [-3] -p -r -s -e 40 (better speed for HTTP and HTTPS)** If you use the option, the connection will be better if the blocking is removed.
 
 > **Note:** If your ISP is **Turknet** and you cannot open some sites you can use plugin like **HTTPS Ewerywhere** in your browser for get rid of that problem.
 
