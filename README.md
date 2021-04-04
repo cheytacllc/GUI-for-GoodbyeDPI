@@ -12,7 +12,7 @@ This application is user interface of [GoodByeDPI](https://github.com/ValdikSS/G
 
 # Usage
 
-**Don't remove the application in directories that have spaces in the name, it will give an error when you run the application.**
+**Don't extract the application in directories that have spaces in the name, it will give an error when you run the application.**
 You need to **close the settings window** and hit start button so that the parameters can be saved. You can check whether the application works correctly from **log section** on the home screen, feel free to let me know when you have any problems.
 
 > To use the program you need to install the VC++ 2017 x86 package. If you wish, you can install **vc_redist.x86.exe** in the directory of the program or download it from the link below.
